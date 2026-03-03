@@ -1,7 +1,14 @@
 const express = require('express')
 const path = require('path')
+require('dotenv').config()
 const app = express()
 const port = 3000
+const mongoose = require('mongoose');
+mongoose.connect(process.env.DATABASE);
+
+const Tuor = mongoose.model('Tour', { 
+  name: String 
+});
 
 
 // Tích hợp pug 
