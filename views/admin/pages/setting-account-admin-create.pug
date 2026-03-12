@@ -1,0 +1,44 @@
+extends ../layouts/default.pug
+
+block title 
+    title Tạo tài khoản quản trị
+block main
+    h2.box-title Tạo tài khoản quản trị
+    //- Section-8
+    .section-8
+        form#setting-account-admin-create-form
+            .inner-group 
+                label(class="inner-label" for="name") Họ tên
+                input(type="text" id="name" name="name" value="Lê Văn A")
+            .inner-group 
+                label(class="inner-label" for="email") Email
+                input(type="text" id="email" name="email" value="levana@gmail.com")
+            .inner-group 
+                label(class="inner-label" for="phone") Số điện thoại
+                input(type="number" id="phone" name="phone" value="01234568")
+            .inner-group 
+                label(class="inner-label" for="role") Nhóm quyền
+                select(id="role" name="role")
+                    option(value="") Quản trị viên
+                    option(value="") Admin
+                    option(value="") Sraff
+            .inner-group 
+                label(class="inner-label" for="positionCompany") Chức vụ
+                input(type="text" id="positionCompany" name="positionCompany" value="Giám đốc")
+            .inner-group 
+                label(class="inner-label" for="status") Trạng thái
+                select(id="status" name="status")
+                    option(value="") Hoạt động
+                    option(value="") Dừng hoạt động
+            .inner-group 
+                label(class="inner-label" for="password") Mật khẩu
+                input(type="text" id="password" name="password" value="123456778")
+            .inner-group.inner-two-col
+                label(class="inner-label" for="logo") Ảnh đại diện
+                div(class="inner-upload-image")
+                    input(type="file" id="logo" name="logo" accept="image/*")
+            .inner-group.inner-button
+                button Tạo mới
+        .inner-back 
+            a(href="#") Quay lại danh sách
+    //-End Section-8

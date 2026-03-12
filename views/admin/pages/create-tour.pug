@@ -1,0 +1,116 @@
+extends ../layouts/default.pug
+
+block title 
+    title Tạo tour
+
+block main
+    h2.box-title Tạo tour
+    //- Section-8
+    .section-8
+        form#tour-create-form
+            .inner-group 
+                label(class="inner-label" for="name") Tên tour
+                input(type="text" id="name" name="name")
+            .inner-group 
+                label(class="inner-label" for="category") Danh mục 
+                select(id="category" name="category")
+                    option(value="") -- Chọn danh mục --
+                    option(value="") Danh mục 1
+                    option(value="") Danh mục 2
+            .inner-group 
+                label(class="inner-label" for="position") Vị trí 
+                input(type="number" id="position" name="position")
+            .inner-group 
+                label(class="inner-label" for="status") Trạng thái
+                select(id="status" name="status")
+                    option(value="") Hoạt động
+                    option(value="") Dừng họat động
+            .inner-group.inner-two-col
+                label(class="inner-label" for="avatar") Ảnh đại diện 
+                div(class="inner-upload-image")
+                    input(type="file" id="avatar" name="avatar" accept="image/*" filepond-image)
+            .inner-group 
+                label(class="inner-label" for="priceOlld") Giá cũ
+                    .inner-input-list 
+                        .inner-input-item
+                            label(class="inner-label" for="people") Người lớn
+                            input(type="number" id="people" name="priceAdult") 
+                        .inner-input-item 
+                            label(class="inner-label" for="child") Trẻ em
+                            input(type="number" id="child" name="priceChildren")
+                        .inner-input-item   
+                            label(class="inner-label" for="baby") Em bé
+                            input(type="number" id="baby" name="priceBaby")
+            .inner-group 
+                label(class="inner-label" for="priceNew") Giá mới
+                    .inner-input-list 
+                        .inner-input-item
+                            label(class="inner-label" for="people") Người lớn
+                            input(type="number" id="people" name="priceNewAdult") 
+                        .inner-input-item 
+                            label(class="inner-label" for="child") Trẻ em
+                            input(type="number" id="child" name="priceNewChildren")
+                        .inner-input-item   
+                            label(class="inner-label" for="baby") Em bé
+                            input(type="number" id="baby" name="priceNewBaby")
+            .inner-group 
+                label(class="inner-label" ) Còn lại
+                    .inner-input-list 
+                        .inner-input-item
+                            label(class="inner-label" for="people") Người lớn
+                            input(type="number" id="people" name="stockAdult") 
+                        .inner-input-item 
+                            label(class="inner-label" for="child") Trẻ em
+                            input(type="number" id="child" name="stockChidren")
+                        .inner-input-item   
+                            label(class="inner-label" for="baby") Em bé
+                            input(type="number" id="baby" name="stockBaby")
+            .inner-group 
+                label(class="inner-label" for="placeTour") Những địa điểm có tour
+                    .inner-checkbox-list 
+                        .inner-checkbox-item
+                            input(type="checkbox" name="location" value="Hà Nội")
+                            label Hà Nội
+                        .inner-checkbox-item
+                            input(type="checkbox" name="location" value="Đà Nẵng")
+                            label Đà Nẵng
+                        .inner-checkbox-item
+                            input(type="checkbox" name="location" value="Nha Trang")
+                            label Nha Trang
+                        .inner-checkbox-item
+                            input(type="checkbox" name="location" value="Hồ Chí Minh")
+                            label Hồ Chí Minh
+            .inner-group 
+                label(class="inner-label" for="time") Thời gian
+                input(type="text" id="time" name="time")
+            .inner-group
+                label(class="inner-label" for="vehicle") Phương tiện
+                input(type="text" id="vehicle" name="vehicle")
+            .inner-group 
+                label(class="inner-label" for="date") Ngày khỏi hành
+                input(type="date" id="date" name="date") 
+            .inner-group.inner-two-col
+                label(class="inner-label" for="information") Thông tin tour
+                textarea(id="information" name="information" textarea-mce)
+            .inner-group.inner-two-col
+                label(class="inner-label" for="information") Lịch trình tour 
+                .inner-schedule
+                    .inner-schedule-list 
+                        .inner-schedule-item 
+                            .inner-schedule-head 
+                                span(class="inner-schedule-button inner-move") 
+                                    <i class="fa-solid fa-up-down-left-right"></i>
+                                input(type="text")
+                                span(class="inner-schedule-button inner-remove") 
+                                    <i class="fa-regular fa-trash-can"></i>
+                                span(class="inner-schedule-button inner-more") 
+                                    <i class="fa-solid fa-chevron-down"></i>
+                            .inner-schedule-body
+                                textarea(textarea-mce) 
+                    .inner-schedule-create + Thêm lich trình
+
+            .inner-group.inner-button
+                button Tạo mới
+        .inner-back 
+            a(href="#") Quay lại danh sách
+    //-End Section-8

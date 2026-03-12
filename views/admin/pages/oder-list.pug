@@ -1,0 +1,106 @@
+extends ../layouts/default.pug
+
+block title 
+    title Quản lý đơn hàng
+
+block main
+    h2.box-title Quản lý đơn hàng
+    //- Section-4
+    .section-4
+        .inner-wrap
+            .inner-item.inner-label
+                <i class="fa-solid fa-filter"></i> Bộ lọc
+            .inner-item
+                select
+                    option(value="") Trạng thái
+                    option(value="") Khởi tạo
+                    option(value="") Đã duyệt
+            .inner-item.inner-date
+                input(type="date")
+                span -
+                input(type="date")
+            .inner-item
+                select
+                    option(value="") Phương thức thanh toán
+                    option(value="") Tiền mặt 
+                    option(value="") Ví Momo 
+            .inner-item
+                select
+                    option(value="") Trạng thái thanh toán
+                    option(value="") Hoàn thành 
+                    option(value="") Chưa thanh toán
+            .inner-item.inner-reset
+                <i class="fa-solid fa-rotate-left"></i> Xóa bộ lọc
+    //- End section-4
+    .section-5 
+        .inner-wrap  
+            .inner-search 
+                <i class="fa-solid fa-magnifying-glass"></i>
+                input(type="text" placeholder="Tìm kiếm")
+    //- End Section-5
+    //- Section-3
+    .section-3 
+        .table-1 
+            table 
+                thead
+                    tr 
+                        th Mã
+                        th Thông tin khách
+                        th Danh sách tour
+                        th Thanh toán
+                        th Trạng thái
+                        th.inner-text-right Ngày đặt
+                        th Hành động
+                tbody
+                    tr 
+                        td.inner-code OD000001
+                        td 
+                            div Họ tên: Lê Văn A
+                            div SĐT: 0123456789
+                            div Ghi chú: Test... 
+                        td 
+                            .inner-list 
+                                .inner-item 
+                                    .inner-image 
+                                        img(src="assets/images/tour1.jpg", alt="tour")
+                                    .inner-content 
+                                        .inner-name Tour Hạ Long
+                                        .inner-quantity Người lớn: 3 x 1.500.000đ
+                                        .inner-quantity Trẻ em: 2 x 1.300.000đ
+                                        .inner-quantity Em bé: 2 x 1.000.000đ
+                                .inner-item 
+                                    .inner-image 
+                                        img(src="assets/images/tour1.jpg", alt="tour")
+                                    .inner-content 
+                                        .inner-name Tour Hạ Long
+                                        .inner-quantity Người lớn: 3 x 1.500.000đ
+                                        .inner-quantity Trẻ em: 2 x 1.300.000đ
+                                        .inner-quantity Em bé: 2 x 1.000.000đ
+                        td 
+                            div Tổng tiền: 10.000.000đ
+                            div Giảm: 400.000đ
+                            div Mã giảm: TOURMUAHE2024
+                            div Thanh toán: 9.600.000đ
+                            div PTTT: Ví Momo
+                            div TTTT: Đã thanh toán
+                        td
+                            .badge.badge-orange Khởi tạo
+                            //- .badge.badge-green Đã duyệt
+                            //- .badge.badge-red Đã hủy
+                        td.inner-text-right 
+                            div 16:20
+                            div 01/01/2024
+                        td 
+                            .inner-buttons
+                                button(class="inner-edit") <i class="fa-regular fa-pen-to-square"></i>
+                                button(class="inner-delete") <i class="fa-regular fa-trash-can"></i>
+                            
+    //- End Section-3 
+    //- Section-7
+    .section-7 
+        span(class="inner-label") Hiển thị 1 - 9 của 78
+        select(class="inner-pagination")
+            option Trang 1
+            option Trang 2
+            option Trang 3
+    //- End Section-7
