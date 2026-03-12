@@ -1,8 +1,5 @@
 extends ../layouts/default.pug
 
-block title 
-    title Tổng quan
-
 block main
     h2.box-title Tạo danh mục
     //- Section-8
@@ -35,6 +32,6 @@ block main
             .inner-group.inner-button
                 button Tạo mới
         .inner-back 
-            a(href="#") Quay lại danh sách
+            a(href=`/${pathAdmin}/category/list`) Quay lại danh sách
     //-End Section-8
     
