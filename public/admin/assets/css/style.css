@@ -736,7 +736,8 @@ a {
   color: #979797;
 }
 
-.section-5 .inner-button-create button {
+.section-5 .inner-button-create button,
+.section-5 .inner-button-create a {
   border-radius: 14px;
   opacity: 0.9;
   padding: 0 28px;
@@ -748,7 +749,11 @@ a {
   cursor: pointer;
   background-color: var(--color-primary);
   min-height: 70px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .section-5 .inner-buton-trash button {
   border-radius: 14px;
   opacity: 0.9;

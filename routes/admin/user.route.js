@@ -6,4 +6,4 @@ router.get('/changePassword',userController.changePassword)
 router.get('/edit',userController.edit)
 
 
-module.exports = router;
+module.exports = router; 

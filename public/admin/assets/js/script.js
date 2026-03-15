@@ -348,4 +348,18 @@ if(settingWebsiteInfoForm) {
 // End Setting Website Info Form
 
 
+// sider
+const sider = document.querySelectorAll(".sider .inner-menu li a");
+if(sider) {
+  const pathNameUrl = window.location.pathname;
+  const splitPathNameUrl = pathNameUrl.split("/");
+  sider.forEach(item => {
+    const href = item.getAttribute("href");
+    const splitHref = href.split("/");
+    if(splitPathNameUrl[1] == splitHref[1] && splitPathNameUrl[2] == splitHref[2]){
+      item.classList.add("active");
+    }
+  }) 
+}
 
+// sider

@@ -1,6 +1,6 @@
 module.exports.list = (req, res) => {
     res.render('admin/pages/tour-list', {
-        pageTitle: 'Danh sách tour'
+        pageTitle: 'Quản lý tour'
     });
 }
 module.exports.create = (req, res) => {
