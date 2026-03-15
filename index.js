@@ -14,7 +14,8 @@ app.set('view engine', 'pug')
 
 // Nhúng file tĩnh
 app.use(express.static(path.join(__dirname, 'public')))
-
+// Cho phép gửi lên dạng json
+app.use(express.json())
 // Biến toàn cục 
 app.locals.pathAdmin =  variableConfig.pathAdmin
 app.use('/', clientRouter)

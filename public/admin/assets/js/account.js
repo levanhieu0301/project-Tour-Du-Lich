@@ -33,12 +33,12 @@ if(loginForm) {
 
 // End login-form 
 // Register-form 
-const registerForm = document.querySelector("#register-form");
-if(loginForm) {
+const registerForm = document.querySelector("#register-form"); 
+if(registerForm) {
     const validation = new JustValidate('#register-form');
 
     validation
-        .addField('#fullname', [
+        .addField('#fullName', [
             {
                 rule: 'required',
                 errorMessage: 'Vui lòng nhập họ tên!',
@@ -105,6 +105,29 @@ if(loginForm) {
             console.log(email);
             console.log(password);
             console.log(agree);
+          if (agree){
+            const dataFinal = {
+              fullName: fullName,
+              email: email,
+              password: password,
+            };
+            fetch("/admin/account/register", {
+              method:"POST", 
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(dataFinal)
+            })
+            .then(res => res.json())
+            .then(data => {
+              if(data.code === "success"){
+                alert(data.message);
+                window.location.href = "/admin/account/login";
+              } else {
+                alert(data.message);
+              }
+            })
+          }
         })
     ;
 }
