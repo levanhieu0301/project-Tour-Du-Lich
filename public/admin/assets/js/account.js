@@ -32,6 +32,7 @@ if(loginForm) {
 }
 
 // End login-form 
+
 // Register-form 
 const registerForm = document.querySelector("#register-form"); 
 if(registerForm) {
@@ -101,17 +102,14 @@ if(registerForm) {
             const email = event.target.email.value;
             const password = event.target.password.value;
             const agree = event.target.agree.checked;
-            console.log(fullName);
-            console.log(email);
-            console.log(password);
-            console.log(agree);
+
           if (agree){
             const dataFinal = {
               fullName: fullName,
               email: email,
               password: password,
             };
-            fetch("/admin/account/register", {
+            fetch(`/${pathAdmin}/account/register`, {
               method:"POST", 
               headers: {
                 "Content-Type": "application/json"
@@ -122,7 +120,7 @@ if(registerForm) {
             .then(data => {
               if(data.code === "success"){
                 alert(data.message);
-                window.location.href = "/admin/account/login";
+                window.location.href = `/${pathAdmin}/account/login`;
               } else {
                 alert(data.message);
               }
@@ -156,8 +154,9 @@ if(forgotPasswordForm) {
     })
   ;
 }
-
 // End forgot-password-form 
+
+
 // OTP Password Form
 const otpPasswordForm = document.querySelector("#otp-password-form");
 if(otpPasswordForm) {
@@ -177,6 +176,8 @@ if(otpPasswordForm) {
   ;
 }
 // End OTP Password Form
+
+
 // Reset Password Form
 const resetPasswordForm = document.querySelector("#reset-password-form");
 if(resetPasswordForm) {
@@ -229,6 +230,8 @@ if(resetPasswordForm) {
   ;
 }
 // End Reset Password Form
+
+
 // Setting Account Admin Create Form
 const settingAccountAdminCreateForm = document.querySelector("#setting-account-admin-create-form");
 if(settingAccountAdminCreateForm) {
@@ -330,6 +333,9 @@ if(settingAccountAdminCreateForm) {
   ;
 }
 // End Setting Account Admin Create Form
+
+
+
 // Setting Role Create Form
 const settingRoleCreateForm = document.querySelector("#setting-role-create-form");
 if(settingRoleCreateForm) {
@@ -361,6 +367,8 @@ if(settingRoleCreateForm) {
   ;
 }
 // End Setting Role Create Form
+
+
 // Profile Edit Form
 const profileEditForm = document.querySelector("#profile-edit-form");
 if(profileEditForm) {
@@ -422,6 +430,8 @@ if(profileEditForm) {
   ;
 }
 // End Profile Edit Form
+
+
 // Profile Change Password Form
 const profileChangePasswordForm = document.querySelector("#profile-change-password-form");
 if(profileChangePasswordForm) {
