@@ -3,6 +3,7 @@ const accountController = require('../../controllers/admin/account.controller');
 const validate = require('../../validates/account.validate');
 
 router.get('/login',accountController.login )
+router.post('/login', validate.loginPostValidate, accountController.loginPost)
 router.get('/forgot-password',accountController.forgotPassword )
 router.get('/register',accountController.register )
 router.post('/register', validate.registerPostValidate, accountController.registerPost)
