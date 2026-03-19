@@ -9,8 +9,8 @@ block main
                 label(class="inner-label" for="name") Tên danh mục 
                 input(type="text" id="name" name="name")
             .inner-group 
-                label(class="inner-label" for="list-parent") Danh mục cha
-                select(id="list-parent" name="list-parent")
+                label(class="inner-label" for="parent") Danh mục cha
+                select(id="parent" name="parent")
                     option(value="") -- Chọn danh mục --
                     option(value="") Danh mục 1
                     option(value="") Danh mục 2
@@ -20,8 +20,8 @@ block main
             .inner-group 
                 label(class="inner-label" for="status") Trạng thái
                 select(id="status" name="status")
-                    option(value="") Hoạt động
-                    option(value="") Dừng họa động
+                    option(value="active") Hoạt động
+                    option(value="inactive") Dừng hoạt động
             .inner-group.inner-two-col
                 label(class="inner-label" for="avatar") Ảnh đại diện 
                 div(class="inner-upload-image")

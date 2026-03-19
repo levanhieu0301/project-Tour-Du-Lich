@@ -9,7 +9,7 @@ try {
     return;
   }
   const decoded = jwt.verify(token, process.env.LG_SECRET);
-  console.log(decoded)
+  
   const exitsAccount = await AccountAdmin.findOne({
     _id: decoded.id,
     email: decoded.email
@@ -20,6 +20,7 @@ try {
     return;
   }
   req.account = exitsAccount;
+  
   next();
 } catch (error) {
   res.clearCookie("token");

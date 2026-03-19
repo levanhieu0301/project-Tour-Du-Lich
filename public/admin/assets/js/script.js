@@ -156,17 +156,32 @@ if(categoryCreateForm) {
       }
     const description = tinymce.get("description").getContent();
 
-      console.log(name);
-      console.log(parent);
-      console.log(position);
-      console.log(status);
-      console.log(avatar);
-    console.log(description);
-    })
-  ;
-}
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("parent", parent);
+      formData.append("position", position);
+      formData.append("status", status);
+      formData.append("avatar", avatar);
+      formData.append("description", description);
+      fetch(`/${pathAdmin}/category/create`, {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.code === "success"){
+          alert(data.message);
+          //window.location.href = `/${pathAdmin}/category/list`;
+        }
+        else {
+          alert(data.message);
+        }
+      })
+  })
+};
+
 // End Category Create Form
-// Category Create Form
+// Tour Create Form
 const tourCreateForm = document.querySelector("#tour-create-form");
 if(tourCreateForm) {
   const validation = new JustValidate('#tour-create-form');
@@ -250,7 +265,7 @@ if(tourCreateForm) {
     })
   ;
 }
-// End Category Create Form
+// End Tour Create Form
 // Order Edit Form
 const orderEditForm = document.querySelector("#order-edit-form");
 if(orderEditForm) {
