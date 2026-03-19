@@ -20,7 +20,9 @@ try {
     return;
   }
   req.account = exitsAccount;
-  
+  res.locals.account = {
+    fullName: exitsAccount.fullName
+  };
   next();
 } catch (error) {
   res.clearCookie("token");
