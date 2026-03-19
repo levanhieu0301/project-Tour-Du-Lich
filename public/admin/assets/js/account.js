@@ -24,12 +24,11 @@ if(loginForm) {
             const email = event.target.email.value;
             const password = event.target.password.value;
             const rememberPassword = event.target.rememberPassword.checked;
-            console.log(email);
-            console.log(password);
-            console.log(rememberPassword);
+  
             const dataFinal = {
               email: email,
-              password: password
+              password: password,
+              rememberPassword: rememberPassword
             };
             fetch(`/${pathAdmin}/account/login`, {
               method: "POST",
@@ -169,7 +168,27 @@ if(forgotPasswordForm) {
     ])
     .onSuccess((event) => {
       const email = event.target.email.value;
-      console.log(email);
+     
+      const dataFinal = {
+        email: email,
+        
+      };
+      fetch(`/${pathAdmin}/account/forgot-password`, {
+        method: "POST",
+        headers: {  
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dataFinal)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.code === "success"){
+          alert(data.message);
+          window.location.href = `/${pathAdmin}/account/otp-password?email=${email}`;
+        } else {
+          alert(data.message);
+        }
+  });
     })
   ;
 }
@@ -190,7 +209,31 @@ if(otpPasswordForm) {
     ])
     .onSuccess((event) => {
       const otp = event.target.otp.value;
-      console.log(otp);
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const email = urlParams.get('email');
+  
+      const dataFinal = {
+        otp: otp,
+        email: email
+      };
+      fetch(`/${pathAdmin}/account/otp-password`, {
+        method: "POST",
+        headers: {  
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dataFinal)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.code === "success"){
+          alert(data.message);
+          window.location.href = `/${pathAdmin}/account/reset-password`;
+        } else {
+          alert(data.message);
+        }
+  });
+
     })
   ;
 }
@@ -244,7 +287,26 @@ if(resetPasswordForm) {
     ])
     .onSuccess((event) => {
       const password = event.target.password.value;
-      console.log(password);
+      const dataFinal = {
+        password: password
+      };
+      fetch(`/${pathAdmin}/account/reset-password`, {
+        method: "POST",
+        headers: {  
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dataFinal)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if(data.code === "success"){
+          alert(data.message);
+          window.location.href = `/${pathAdmin}/account/login`;
+          
+        } else {
+          alert(data.message);
+        }
+  });
     })
   ;
 }
@@ -503,3 +565,4 @@ if(profileChangePasswordForm) {
   ;
 }
 // End Profile Change Password Form
+

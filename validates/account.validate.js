@@ -94,7 +94,33 @@ module.exports.loginPostValidate = (req, res, next) => {
         "password.lowercase": "Mật khẩu phải chứa ít nhất một chữ cái thường!",
         "password.number": "Mật khẩu phải chứa ít nhất một chữ số!",
         "password.special": "Mật khẩu phải chứa ít nhất một ký tự đặc biệt!",
-      })
+      }),
+    rememberPassword: Joi.boolean()
+  })
+  const { error } = schema.validate(req.body);
+
+  if(error) {
+    const errorMessage = error.details[0].message;
+
+    res.json({
+      code: "error",
+      message: errorMessage
+    });
+    return;
+  }
+  
+  next();
+ 
+}
+module.exports.forgotPasswordPostValidate = (req, res, next) => {
+  const schema = Joi.object({
+    email: Joi.string()
+      .required()
+      .email()
+      .messages({
+        "string.empty": "Vui lòng nhập email!",
+        "string.email": "Vui long nhập email hợp lệ!"
+      }),
   })
   const { error } = schema.validate(req.body);
 

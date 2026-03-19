@@ -7,15 +7,16 @@ const oderRoute = require('./oder.route');
 const userRoute = require('./user.route');
 const contactRoute = require('./contact.route');
 const settingRoute = require('./setting.route');
+const authMiddleware = require('../../middlewares/auth.middlewares');
 
 router.use('/account', accountLoginRoute);
-router.use('/dashboard', dashboardRoute);
-router.use('/category', categoryRoute);
-router.use('/tours', toursRoute);
-router.use('/oder', oderRoute);
-router.use('/user', userRoute);
-router.use('/contact', contactRoute);
-router.use('/setting', settingRoute);
+router.use('/dashboard',authMiddleware.verifyToken, dashboardRoute);
+router.use('/category',authMiddleware.verifyToken, categoryRoute);
+router.use('/tours',authMiddleware.verifyToken, toursRoute);
+router.use('/oder',authMiddleware.verifyToken, oderRoute);
+router.use('/user',authMiddleware.verifyToken, userRoute);
+router.use('/contact',authMiddleware.verifyToken, contactRoute);
+router.use('/setting',authMiddleware.verifyToken, settingRoute);
 
 // router.get('/*', (req, res) => {
 //     res.render('admin/pages/Error', {
@@ -23,7 +24,7 @@ router.use('/setting', settingRoute);
 //     })
 // })
 
-router.use((req, res) => {
+router.use(authMiddleware.verifyToken, (req, res) => {
   res.status(404).render('admin/pages/Error', {
     pageTitle: "404 Not Found",
   });

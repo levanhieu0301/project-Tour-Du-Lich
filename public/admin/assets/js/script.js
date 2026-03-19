@@ -363,3 +363,20 @@ if(sider) {
 }
 
 // sider
+
+// Logout
+const btnLogout = document.querySelector(".inner-logout");
+if(btnLogout){
+  btnLogout.addEventListener("click", () => {
+    fetch(`/${pathAdmin}/account/logout`,{
+      method: "POST"
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.code === "success"){
+        window.location.href = `/${pathAdmin}/account/login`;
+      }
+    })
+  })
+}
+// Logout
