@@ -171,7 +171,7 @@ if(categoryCreateForm) {
       .then(data => {
         if(data.code === "success"){
           alert(data.message);
-          //window.location.href = `/${pathAdmin}/category/list`;
+          window.location.href = `/${pathAdmin}/category/list`;
         }
         else {
           alert(data.message);

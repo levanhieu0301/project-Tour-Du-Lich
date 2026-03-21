@@ -127,7 +127,7 @@ if(registerForm) {
               email: email,
               password: password,
             };
-            fetch(`/${pathAdmin}/account/register`, {
+            fetch(`/${pathAdmin}/account/register`, { 
               method:"POST", 
               headers: {
                 "Content-Type": "application/json"
