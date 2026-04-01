@@ -1,9 +1,36 @@
 const Category = require("../../models/categories.model");
 const CategoryTree = require("../../helpers/category-tree.helper")
+const AccountAdmin = require("../../models/account-admin.model")
+const moment = require('moment');
+module.exports.list = async (req, res) => {
+    const listCategory = await Category
+    .find({
+        deleted: false,
+    })
+    .sort({
+        position:"desc"
+    })
+    for(const item of listCategory){
+        if(item.createdBy){
+            const infoAccount = await AccountAdmin.findOne({
+                _id: item.createdBy
+            })
+            item.createdByFullName = infoAccount.fullName
+        }
+        if(item.updatedBy){
+            const infoAccount = await AccountAdmin.findOne({
+                _id: item.updatedBy
+            })
+           item.updatedByFullName = infoAccount.fullName
+        }
+        item.createdAtFormat = moment(item.createdAt).format("HH:mm - DD/MM/YYYY")
+        item.updatedAtFormat = moment(item.updatedAt).format("HH:mm - DD/MM/YYYY")
+    }
 
-module.exports.list = (req, res) => {
+   
     res.render('admin/pages/category-list', {
-        pageTitle: 'Quản lý danh mục'
+        pageTitle: 'Quản lý danh mục',
+        listCategory: listCategory
     });
 }
 module.exports.create = async (req, res) => {
@@ -39,3 +66,71 @@ module.exports.createPost = async (req, res) => {
         //message: "Tạo danh mục thành công"
     })
 }
+module.exports.edit = async (req, res) => {
+    try {
+        const id = req.params.id;
+    const categoryInfo = await Category.findOne({
+        _id: id,
+        deleted: false,
+    })
+    if(!categoryInfo){
+        req.flash('error', 'Danh mục không tồn tại!');
+        return res.redirect(`/${pathAdmin}/category/list`)
+    }
+    const listCategory = await Category.find({
+        deleted: false,
+    })
+
+    const buildCategoryTree = CategoryTree.CategoryTree(listCategory, "")
+
+    res.render('admin/pages/category-edit', {
+        pageTitle: 'Chỉnh sửa danh mục',
+        categoryInfo: categoryInfo,
+        listCategory: buildCategoryTree
+    });
+    } catch (error) {
+        res.redirect(`/${pathAdmin}/category/list`)
+    }
+}       
+module.exports.editPatch = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const categoryInfo = await Category.findOne({
+            _id: id,
+            deleted: false,
+        })
+        if(!categoryInfo){
+            res.json({
+                code: "error",
+                message: "Danh mục không tồn tại!"
+            })
+            return;
+        }
+        if(req.body.position){
+            req.body.position = parseInt(req.body.position)
+        }else {
+            const totalRecord = await Category.countDocuments({})
+            req.body.position = totalRecord + 1;
+        }
+        req.body.updatedBy = req.account.id
+
+        req.body.avatar = req.file? req.file.path : delete req.body.avatar
+
+        await Category.updateOne({
+            _id: id,
+            deleted: false,
+        }, req.body)
+
+       req.flash('success', 'Cập nhật danh mục thành công!');
+
+        res.json({
+        code: "success",
+        });
+
+    } catch (error) {
+        res.json({
+            code: "error",
+            message: "Có lỗi xảy ra, vui lòng thử lại!"
+        })
+    }
+}   

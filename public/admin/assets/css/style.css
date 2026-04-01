@@ -830,7 +830,10 @@ a {
   border-radius: 8px;
   background-color: #fafbfd;
 }
-.table-2 table tbody tr td .inner-buttons button {
+
+
+.table-2 table tbody tr td .inner-buttons button,
+table-2 table tbody tr td .inner-buttons a {
   font-size: 15px;
   padding: 8.5px 16.5px;
   border: 0;
@@ -839,7 +842,8 @@ a {
   background-color: transparent;
   border-right: 1px solid #d5d5d5;
 }
-.table-2 table tbody tr td .inner-buttons button:last-child {
+.table-2 table tbody tr td .inner-buttons button:last-child,
+.table-2 table tbody tr td .inner-buttons a:last-child  {
   border-right: 0;
 }
 .table-2 table tbody tr td .inner-buttons .inner-edit {
