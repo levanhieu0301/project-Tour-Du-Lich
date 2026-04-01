@@ -8,10 +8,10 @@ block main
             .inner-item.inner-label
                 <i class="fa-solid fa-filter"></i> Bộ lọc
             .inner-item
-                select
+                select(filter-status)
                     option(value="") Trạng thái
-                    option(value="") Hoạt động
-                    option(value="") Tạm dừng
+                    option(value="active") Hoạt động
+                    option(value="inactive") Tạm dừng
             .inner-item
                 select
                     option(value="") Người tạo
@@ -69,9 +69,9 @@ block main
                                 img(src=item.avatar class="inner-avatar")
                             td(class="inner-center") #{item.position}
                             td(class="inner-center")
-                                if(item.status = "active")
+                                if(item.status == "active")
                                     .badge.badge-green Hoạt động
-                                if(item.status != "active")
+                                else if(item.status == "inactive")
                                     .badge.badge-red Tạm dừng
                             td
                                 div #{item.createdByFullName}
@@ -83,8 +83,12 @@ block main
                                 .inner-buttons
                                     a(href=`/${pathAdmin}/category/edit/${item.id}`
                                     class="inner-edit") <i class="fa-regular fa-pen-to-square"></i>
-                                    a(href="javascript:;"
-                                     class="inner-delete") <i class="fa-regular fa-trash-can"></i>
+                                    button(
+                                    class="inner-delete"
+                                    button-delete
+                                    data-api=`/${pathAdmin}/category/delete/${item.id}`
+                                    ) <i class="fa-regular fa-trash-can"></i>
+
     //- End Section-6
     //- Section-7
     .section-7 

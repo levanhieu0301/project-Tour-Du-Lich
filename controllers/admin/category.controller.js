@@ -3,10 +3,15 @@ const CategoryTree = require("../../helpers/category-tree.helper")
 const AccountAdmin = require("../../models/account-admin.model")
 const moment = require('moment');
 module.exports.list = async (req, res) => {
-    const listCategory = await Category
-    .find({
+    const find = {
         deleted: false,
-    })
+        
+    }
+    if(req.query.status){
+        find.status = req.query.status
+    }
+    const listCategory = await Category
+    .find(find)
     .sort({
         position:"desc"
     })
@@ -134,3 +139,28 @@ module.exports.editPatch = async (req, res) => {
         })
     }
 }   
+module.exports.deletePatch = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    await Category.updateOne({
+      _id: id
+    }, {
+      deleted: true,
+      deletedAt: Date.now(),
+      deletedBy: req.account.id
+    });
+
+    req.flash('success', 'Xóa danh mục thành công!');
+
+    res.json({
+      code: "success",
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      code: "error",
+      message: "Id không tồn tại trong hệ thống!"
+    })
+  }
+}

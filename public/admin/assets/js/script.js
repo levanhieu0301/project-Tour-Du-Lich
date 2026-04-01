@@ -492,3 +492,50 @@ if(categoryEditForm) {
 };
 
 // End Category edit Form
+
+// Button Delete
+const listButtonDelete = document.querySelectorAll("[button-delete]");
+
+if(listButtonDelete.length > 0) {
+  listButtonDelete.forEach(button => {
+    button.addEventListener("click", () => {
+      const dataApi = button.getAttribute("data-api");
+
+      fetch(dataApi, {
+        method: "PATCH"
+      })
+        .then(res => res.json())
+        .then(data => {
+          if(data.code == "error") {
+            alert(data.message);
+          }
+
+          if(data.code == "success") {
+            window.location.reload();
+          }
+        })
+    })
+  })
+}
+// End Button Delete
+// Lọc theo status
+const filterStatus = document.querySelector("[filter-status]");
+if(filterStatus){
+  const url = new URL(window.location.href); 
+  filterStatus.addEventListener("change", () => {
+    const value = filterStatus.value;
+    if(value){
+      url.searchParams.set("status", value);
+    }       
+    else {    
+      url.searchParams.delete("status");
+    }
+    window.location.href = url.href;     
+  })
+  // Hiển thị mặc định
+  const currentValue = url.searchParams.get("status");
+  if(currentValue){
+    filterStatus.value = currentValue;
+  }
+}
+// end Lọc theo status
