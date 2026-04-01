@@ -5,10 +5,12 @@ const moment = require('moment');
 module.exports.list = async (req, res) => {
     const find = {
         deleted: false,
-        
     }
     if(req.query.status){
         find.status = req.query.status
+    }
+    if(req.query.createdBy){
+        find.createdBy = req.query.createdBy
     }
     const listCategory = await Category
     .find(find)
@@ -31,11 +33,20 @@ module.exports.list = async (req, res) => {
         item.createdAtFormat = moment(item.createdAt).format("HH:mm - DD/MM/YYYY")
         item.updatedAtFormat = moment(item.updatedAt).format("HH:mm - DD/MM/YYYY")
     }
+    // Danh sách tài khoản admin
+    const listAccountAdmin = await AccountAdmin
+    .find({
+        status: "active",
+    })
+    .select("id fullName")
+
+    // HếtDanh sách tài khoản admin
 
    
     res.render('admin/pages/category-list', {
         pageTitle: 'Quản lý danh mục',
-        listCategory: listCategory
+        listCategory: listCategory,
+        listAccountAdmin: listAccountAdmin
     });
 }
 module.exports.create = async (req, res) => {
