@@ -11,4 +11,5 @@ router.post('/create', upload.single('avatar'),categoryValidate.categoryValidate
 router.get('/edit/:id',categoryController.edit)
 router.patch('/edit/:id', upload.single('avatar'), categoryValidate.categoryValidate, categoryController.editPatch)
 router.patch('/delete/:id',categoryController.deletePatch)
+router.patch('/change-multi', categoryController.changeMultiPatch)
 module.exports = router; 
