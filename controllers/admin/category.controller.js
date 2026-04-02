@@ -5,6 +5,11 @@ const moment = require('moment');
 module.exports.list = async (req, res) => {
     const find = {
         deleted: false,
+        // Lọc theo ngày tạo(ý tưởng)
+        // createdAt:{
+        //     $gte: "09-09-1022", // ngày bắt đầu
+        //     $lte: "09-09-2023" // ngày kết thúc
+        // }
     }
     if(req.query.status){
         find.status = req.query.status
@@ -12,6 +17,22 @@ module.exports.list = async (req, res) => {
     if(req.query.createdBy){
         find.createdBy = req.query.createdBy
     }
+    // Lọc theo ngày tạo
+    const dateFilter = {};
+    if(req.query.startDate) {
+        const startDate = moment(req.query.startDate).startOf("day").toDate();
+        dateFilter.$gte = startDate;
+    }
+    if(req.query.endDate) {
+        const endDate = moment(req.query.endDate).startOf("day").toDate();
+        dateFilter.$lte = endDate;
+    }
+    if(Object.keys(dateFilter).length > 0) {
+        find.createdAt = dateFilter;
+    }
+    // Hết Lọc theo Ngày tạo
+
+    
     const listCategory = await Category
     .find(find)
     .sort({
@@ -41,7 +62,6 @@ module.exports.list = async (req, res) => {
     .select("id fullName")
 
     // HếtDanh sách tài khoản admin
-
    
     res.render('admin/pages/category-list', {
         pageTitle: 'Quản lý danh mục',
