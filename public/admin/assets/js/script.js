@@ -193,7 +193,7 @@ if(categoryCreateForm) {
 };
 
 // End Category Create Form
-// Tour Create Form
+// Tour Create Form 
 const tourCreateForm = document.querySelector("#tour-create-form");
 if(tourCreateForm) {
   const validation = new JustValidate('#tour-create-form');
@@ -222,12 +222,12 @@ if(tourCreateForm) {
       const priceNewChildren = event.target.priceNewChildren.value;
       const priceNewBaby = event.target.priceNewBaby.value;
       const stockAdult = event.target.stockAdult.value;
-      //const stockChildren = event.target.stockChildren.value;
+      const stockChildren = event.target.stockChildren.value;
       const stockBaby = event.target.stockBaby.value;
       const locations = [];
       const time = event.target.time.value;
       const vehicle = event.target.vehicle.value;
-      //const departureDate = event.target.departureDate.value;
+      const departureDate = event.target.date.value;
       const information = tinymce.get("information").getContent();
       const schedules = [];
       // locations
@@ -265,14 +265,51 @@ if(tourCreateForm) {
       console.log(priceNewChildren);
       console.log(priceNewBaby);
       console.log(stockAdult);
-      //console.log(stockChildren);
+      console.log(stockChildren);
       console.log(stockBaby);
       console.log(locations);
       console.log(time);
       console.log(vehicle);
-      //console.log(departureDate);
+      console.log(departureDate);
       console.log(information);
       console.log(schedules);
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("category", category);
+      formData.append("position", position);        
+      formData.append("status", status);
+      formData.append("avatar", avatar);
+      formData.append("priceAdult", priceAdult);
+      formData.append("priceChildren", priceChildren);
+      formData.append("priceBaby", priceBaby);
+      formData.append("priceNewAdult", priceNewAdult);
+      formData.append("priceNewChildren", priceNewChildren);  
+      formData.append("priceNewBaby", priceNewBaby);
+      formData.append("stockAdult", stockAdult);
+      formData.append("stockChildren", stockChildren);
+      formData.append("stockBaby", stockBaby);
+      formData.append("locations", JSON.stringify(locations));
+      formData.append("time", time);
+      formData.append("vehicle", vehicle);
+      formData.append("departureDate", departureDate);
+      formData.append("information", information);
+      formData.append("schedules", JSON.stringify(schedules));
+
+      fetch(`/${pathAdmin}/tours/create`, {
+        method: 'POST',
+        body: formData
+      })
+      .then (res => res.json())
+      .then (data => {
+        if(data.code === "success"){
+          alert(data.message);
+          window.location.href = `/${pathAdmin}/tours/list`;
+        }
+        else {
+          alert(data.message);
+        }
+      })
 
     })
   ;
