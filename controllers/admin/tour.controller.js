@@ -161,9 +161,49 @@ module.exports.createPost = async (req, res) => {
         message: "Tạo tour thành công"
     })
 }   
-module.exports.trash = (req, res) => {
+module.exports.trash = async(req, res) => {
+     const find = {
+        deleted: true,
+    }
+    // Phân trang
+    let limitItem = 20;
+    let page = 1;
+    if(req.query.page) {
+        const pageCurrent = parseInt(req.query.page);
+        if(pageCurrent > 0) {
+            page = pageCurrent;
+        }
+    }
+    const totalRecord = await Tour.countDocuments({});
+    const totalPage = Math.ceil(totalRecord / limitItem);
+    const skip = (page -1)*limitItem;
+    const pagination = {
+        totalRecord: totalRecord,
+        totalPage: totalPage,
+        skip: skip,
+        pageCurrent: page
+    };
+
+    // End phân trang
+    const tourList = await Tour
+    .find(find)
+    .skip(skip)
+    .limit(limitItem)
+
+    for(const item of tourList) {
+        if(item.deletedBy) {
+        const infoAccountDeleted = await AccountAdmin.findOne({
+            _id: item.deletedBy
+        });
+        item.deletedByFullName = infoAccountDeleted.fullName;
+        }
+
+        item.deletedAtFormat = moment(item.deletedAt).format("HH:mm - DD/MM/YYYY");
+    }
     res.render('admin/pages/Tour-trash', {
-        pageTitle: 'Thùng rác tour'
+        pageTitle: 'Thùng rác tour',
+        tourList: tourList,
+        pagination: pagination
     });
 }
 module.exports.changeMulti = async (req, res) => {
