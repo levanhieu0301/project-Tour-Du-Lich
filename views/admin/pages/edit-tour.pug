@@ -1,0 +1,126 @@
+extends ../layouts/default.pug
+include ../mixins/option.pug
+
+
+block main
+    h2.box-title #{pageTitle}
+    //- Section-8
+    .section-8
+        form#tour-edit-form
+            .inner-group(style="display: none;")
+                input(type="text" name="id" value=infoTour.id)
+            .inner-group 
+                label(class="inner-label" for="name") Tên tour 
+                input(type="text" id="name" name="name" value =  infoTour.name)
+            .inner-group 
+                label(class="inner-label" for="category") Danh mục 
+                select(id="category" name="category")
+                    option(value="") -- Chọn danh mục --
+                    +option(categoryList,0, infoTour.category)
+            .inner-group 
+                label(class="inner-label" for="position") Vị trí 
+                input(type="number" id="position" name="position" value =  infoTour.position)
+            .inner-group 
+                label(class="inner-label" for="status") Trạng thái
+                select(id="status" name="status")
+                    option(
+                        value="active" 
+                        selected = infoTour.status === "active") Hoạt động
+                    option(
+                        value="inactive" 
+                        selected = infoTour.status === "inactive") Tạm dừng
+            .inner-group.inner-two-col
+                label(class="inner-label" for="avatar") Ảnh đại diện 
+                div(class="inner-upload-image" image-default=infoTour.avatar)
+                    input(type="file" id="avatar" name="avatar" accept="image/*" filepond-image )
+            .inner-group 
+                label(class="inner-label" for="priceOlld") Giá cũ
+                    .inner-input-list 
+                        .inner-input-item
+                            label(class="inner-label" for="people") Người lớn
+                            input(type="number" id="people" name="priceAdult" value =  infoTour.priceAdult) 
+                        .inner-input-item 
+                            label(class="inner-label" for="child") Trẻ em
+                            input(type="number" id="child" name="priceChildren" value =  infoTour.priceChildren)
+                        .inner-input-item   
+                            label(class="inner-label" for="baby") Em bé
+                            input(type="number" id="baby" name="priceBaby" value =  infoTour.priceBaby)
+            .inner-group 
+                label(class="inner-label" for="priceNew") Giá mới
+                    .inner-input-list 
+                        .inner-input-item
+                            label(class="inner-label" for="people") Người lớn
+                            input(type="number" id="people" name="priceNewAdult" value =  infoTour.priceNewAdult) 
+                        .inner-input-item 
+                            label(class="inner-label" for="child") Trẻ em
+                            input(type="number" id="child" name="priceNewChildren" value =  infoTour.priceNewChildren)
+                        .inner-input-item   
+                            label(class="inner-label" for="baby") Em bé
+                            input(type="number" id="baby" name="priceNewBaby" value =  infoTour.priceNewBaby)
+            .inner-group 
+                label(class="inner-label" ) Còn lại
+                    .inner-input-list 
+                        .inner-input-item
+                            label(class="inner-label" for="people") Người lớn 
+                            input(type="number" id="people" name="stockAdult" value =  infoTour.stockAdult) 
+                        .inner-input-item 
+                            label(class="inner-label" for="child") Trẻ em
+                            input(type="number" id="child" name="stockChildren" value =  infoTour.stockChildren)
+                        .inner-input-item   
+                            label(class="inner-label" for="baby") Em bé
+                            input(type="number" id="baby" name="stockBaby" value =  infoTour.stockBaby)
+            .inner-group 
+                label(class="inner-label" for="placeTour") Những địa điểm có tour
+                    .inner-checkbox-list 
+                        each item in cityList
+                            .inner-checkbox-item
+                                input(type="checkbox" name="location" value=item.id checked=infoTour.locations.includes(item.id))
+                                label #{item.name}
+            .inner-group 
+                label(class="inner-label" for="time") Thời gian
+                input(type="text" id="time" name="time" value =  infoTour.time)
+            .inner-group
+                label(class="inner-label" for="vehicle") Phương tiện
+                input(type="text" id="vehicle" name="vehicle" value =  infoTour.vehicle)
+            .inner-group 
+                label(class="inner-label" for="date") Ngày khỏi hành
+                input(type="date" id="date" name="date" value =  infoTour.departureDateFormat) 
+            .inner-group.inner-two-col
+                label(class="inner-label" for="information") Thông tin tour
+                textarea(id="information" name="information" textarea-mce) #{infoTour.information}
+            .inner-group.inner-two-col
+                label(class="inner-label" for="schedule") Lịch trình tour 
+                .inner-schedule
+                    .inner-schedule-list 
+                    if(infoTour.schedule && infoTour.schedule.length > 0)
+                        each item in infoTour.schedule
+                            .inner-schedule-item 
+                                .inner-schedule-head 
+                                    span(class="inner-schedule-button inner-move") 
+                                        <i class="fa-solid fa-up-down-left-right"></i>
+                                    input(type="text" value= item.title)
+                                    span(class="inner-schedule-button inner-remove") 
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    span(class="inner-schedule-button inner-more") 
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                .inner-schedule-body
+                                    textarea(textarea-mce) #{item.description}
+                    else 
+                        .inner-schedule-item 
+                            .inner-schedule-head 
+                                span(class="inner-schedule-button inner-move") 
+                                    <i class="fa-solid fa-up-down-left-right"></i>
+                                input(type="text")
+                                span(class="inner-schedule-button inner-remove") 
+                                    <i class="fa-regular fa-trash-can"></i>
+                                span(class="inner-schedule-button inner-more") 
+                                    <i class="fa-solid fa-chevron-down"></i>
+                            .inner-schedule-body
+                                textarea(textarea-mce)
+                    .inner-schedule-create + Thêm lich trình
+
+            .inner-group.inner-button
+                button Cập nhật
+        .inner-back 
+            a(href=`/${pathAdmin}/tours/list`) Quay lại danh sách
+    //-End Section-8

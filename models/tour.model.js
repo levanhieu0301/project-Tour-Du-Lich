@@ -21,7 +21,6 @@ const schema = new mongoose.Schema(
     stockBaby: Number,
     locations: Array,
     time: String,
-    vehicle: String,
     departureDate: Date,
     information: String,
     schedules: Array,
