@@ -1132,3 +1132,27 @@ if(tourEditForm) {
   ;
 }
 // End Tour Edit Form
+// Button Delete
+const ButtonDelete = document.querySelectorAll("[button-delete]");
+if(ButtonDelete.length > 0) {
+  ButtonDelete.forEach(button => {
+    button.addEventListener("click", () => {
+      const dataApi = button.getAttribute("data-api");
+
+      fetch(dataApi, {
+        method: "PATCH"
+      })
+        .then(res => res.json())
+        .then(data => {
+          if(data.code == "error") {
+            alert(data.message);
+          }
+
+          if(data.code == "success") {
+            window.location.reload();
+          }
+        })
+    })
+  })
+}
+// End Button Delete
