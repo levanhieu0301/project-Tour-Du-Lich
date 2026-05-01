@@ -1156,3 +1156,27 @@ if(ButtonDelete.length > 0) {
   })
 }
 // End Button Delete
+// Button Undo
+const listButtonUndo = document.querySelectorAll("[button-undo]");
+if(listButtonUndo.length > 0) {
+  listButtonUndo.forEach(button => {
+    button.addEventListener("click", () => {
+      const dataApi = button.getAttribute("data-api");
+
+      fetch(dataApi, {
+        method: "PATCH"
+      })
+        .then(res => res.json())
+        .then(data => {
+          if(data.code == "error") {
+            alert(data.message);
+          }
+
+          if(data.code == "success") {
+            window.location.reload();
+          }
+        })
+    })
+  })
+}
+// End Button Undo

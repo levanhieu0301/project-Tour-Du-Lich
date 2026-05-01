@@ -13,4 +13,5 @@ router.patch("/change-multi",toursController.changeMulti)
 router.get("/edit/:id",toursController.edit)
 router.patch("/edit/:id",upload.single('avatar'),tourValidate.createPost,toursController.editPatch)
 router.patch("/delete/:id",toursController.deletePatch)
+router.patch("/undo/:id",toursController.undoPatch)
 module.exports = router;

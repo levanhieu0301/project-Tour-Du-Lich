@@ -332,3 +332,25 @@ module.exports.deletePatch = async (req, res) => {
     })
   }
 }
+module.exports.undoPatch = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    await Tour.updateOne({
+      _id: id
+    }, {
+      deleted: false
+    });
+
+
+    res.json({
+        code: "success",
+        message: "Khôi phục tour thành công"
+    });
+  } catch (error) {
+    res.json({
+      code: "error",
+      message: error
+    });
+  }
+}
