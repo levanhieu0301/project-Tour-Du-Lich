@@ -9,5 +9,6 @@ router.get('/list',toursController.list)
 router.get('/create',toursController.create)
 router.get('/trash',toursController.trash)
 router.post("/create",upload.single('avatar'),tourValidate.createPost,toursController.createPost)
+router.patch("/change-multi",toursController.changeMulti)
 
 module.exports = router;

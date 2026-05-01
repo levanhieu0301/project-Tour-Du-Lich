@@ -2,9 +2,117 @@ const Category = require("../../models/categories.model");
 const CategoryTree = require("../../helpers/category-tree.helper")
 const City = require('../../models/cities.model');
 const Tour = require("../../models/tour.model");
-module.exports.list = (req, res) => {
+const AccountAdmin = require("../../models/account-admin.model");
+const moment = require('moment');
+const getAllChildIds = require("../../helpers/category-tree.helper");
+const slugify = require('slugify');
+module.exports.list = async (req, res) => {
+    const find = {
+        deleted: false,
+    }
+    // Lọc theo trạng thái
+    if(req.query.status) {
+        find.status = req.query.status;
+    }
+    // End lọc theo trạng thái
+    // Lọc theo người tạo
+    if(req.query.createdBy) {
+        find.createdBy = req.query.createdBy;
+    }
+    // End lọc theo người tạo
+    // Lọc theo khoảng thời gian
+    const dateFilter = {};
+    if(req.query.startDate){
+        const startDateFomrat= moment(req.query.startDate).startOf("day").toDate()
+        dateFilter.$gte = startDateFomrat;
+    } 
+    if(req.query.endDate){
+        const endDateFomrat= moment(req.query.endDate).startOf("day").toDate()
+        dateFilter.$lte =  endDateFomrat;
+    } 
+    if(Object.keys(dateFilter).length > 0){
+        find.createdAt = dateFilter;
+    }
+
+    // End lọc theo khoảng thời gian
+    // Lọc theo danh mục
+    const listCategory = await Category.find({
+        deleted: false,
+    })
+    const buildCategoryTree = CategoryTree.CategoryTree(listCategory, "")
+    if(req.query.category) {
+        const parentId = req.query.category;
+
+        const childIds = getAllChildIds.getAllChildIds(listCategory, parentId);
+
+        const allIds = [parentId, ...childIds];
+
+        find.category = { $in: allIds };
+    }
+    // End lọc theo danh mục 
+    // search 
+    if(req.query.keyword){
+        const keyword = slugify(req.query.keyword, {
+            lower: true
+        });
+        const regexKeyword = new RegExp(keyword);
+        find.slug = regexKeyword;
+    }
+    // End search
+    // Phân trang
+    let limitItem = 20;
+    let page = 1;
+    if(req.query.page) {
+        const pageCurrent = parseInt(req.query.page);
+        if(pageCurrent > 0) {
+            page = pageCurrent;
+        }
+    }
+    const totalRecord = await Tour.countDocuments({});
+    const totalPage = Math.ceil(totalRecord / limitItem);
+    const skip = (page -1)*limitItem;
+    const pagination = {
+        totalRecord: totalRecord,
+        totalPage: totalPage,
+        skip: skip,
+        pageCurrent: page
+    };
+
+    // End phân trang
+    const tourList = await Tour
+    .find(find)
+    .skip(skip)
+    .limit(limitItem)
+    for(const item of tourList) {
+        if(item.createdBy){
+            const infoAccount = await AccountAdmin.findOne({
+                _id: item.createdBy
+            })
+            item.createdByFullName = infoAccount.fullName
+        }
+        if(item.updatedBy){
+            const infoAccount = await AccountAdmin.findOne({
+                _id: item.updatedBy
+            })
+           item.updatedByFullName = infoAccount.fullName
+        }
+        item.createdAtFormat = moment(item.createdAt).format("HH:mm - DD/MM/YYYY")
+        item.updatedAtFormat = moment(item.updatedAt).format("HH:mm - DD/MM/YYYY")
+    }
+
+    // Danh sách tài khoản admin
+    const accountAdminList = await AccountAdmin
+    .find({
+        status: "active"
+    })
+    .select("id fullName")
+    // End danh sách tài khoản admin
     res.render('admin/pages/tour-list', {
-        pageTitle: 'Quản lý tour'
+        pageTitle: 'Quản lý tour',
+        tourList: tourList,
+        accountAdminList: accountAdminList,
+        listCategory: buildCategoryTree,
+        pagination: pagination
     });
 }
 module.exports.create = async (req, res) => {
@@ -57,4 +165,32 @@ module.exports.trash = (req, res) => {
     res.render('admin/pages/Tour-trash', {
         pageTitle: 'Thùng rác tour'
     });
+}
+module.exports.changeMulti = async (req, res) => {
+    const { option, ids } = req.body;
+
+    switch (option) {
+      case "active":
+      case "inactive":
+        await Tour.updateMany({
+          _id: { $in: ids }
+        }, {
+          status: option
+        });
+        break;
+      case "delete":
+        await Tour.updateMany({
+          _id: { $in: ids }
+        }, {
+          deleted: true,
+          deletedAt: Date.now(),
+          deletedBy: req.account.id
+        });
+        break;
+    }
+
+    res.json({
+        code: "success",
+        message: "Cập nhật trạng thái thành công"
+    })
 }

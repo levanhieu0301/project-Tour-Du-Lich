@@ -70,18 +70,36 @@ module.exports.list = async (req, res) => {
         position:"desc"
     })
     for(const item of listCategory){
+        // if(item.createdBy){
+        //     const infoAccount = await AccountAdmin.findOne({
+        //         _id: item.createdBy
+        //     })
+        //     item.createdByFullName = infoAccount.fullName
+        // }
         if(item.createdBy){
-            const infoAccount = await AccountAdmin.findOne({
-                _id: item.createdBy
-            })
+        const infoAccount = await AccountAdmin.findOne({
+            _id: item.createdBy
+        })
+        if(infoAccount){
             item.createdByFullName = infoAccount.fullName
-        }
+        } else {
+            item.createdByFullName = "Không xác định"
+        }}
+        // if(item.updatedBy){
+        //     const infoAccount = await AccountAdmin.findOne({
+        //         _id: item.updatedBy
+        //     })
+        //    item.updatedByFullName = infoAccount.fullName
+        // }
         if(item.updatedBy){
-            const infoAccount = await AccountAdmin.findOne({
-                _id: item.updatedBy
-            })
-           item.updatedByFullName = infoAccount.fullName
-        }
+        const infoAccount = await AccountAdmin.findOne({
+            _id: item.updatedBy
+        })
+        if(infoAccount){
+            item.updatedByFullName = infoAccount.fullName
+        } else {
+            item.updatedByFullName = "Không xác định"
+        }}
         item.createdAtFormat = moment(item.createdAt).format("HH:mm - DD/MM/YYYY")
         item.updatedAtFormat = moment(item.updatedAt).format("HH:mm - DD/MM/YYYY")
     }

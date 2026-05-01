@@ -767,3 +767,244 @@ if(pagination) {
 // End Pagination
 
 
+// Lọc theo status tour
+
+const selectStatus = document.querySelector("[select-status]");
+if(selectStatus) {
+  const url = new URL(window.location.href);
+  selectStatus.addEventListener("change", () => {
+    const value  = selectStatus.value;
+    if(value){
+      url.searchParams.set("status", value);
+    }else {
+      url.searchParams.delete("status");
+    }
+    window.location.href = url.href
+  })
+  const valuCurrent = url.searchParams.get("status");
+  if(valuCurrent) {
+    selectStatus.value = valuCurrent;
+  }
+}
+
+
+
+// TOUR 
+// End Lọc theo status tour
+
+// Filter Created By
+const createdBy = document.querySelector("[createdBy]");
+if(createdBy) {
+  const url = new URL(window.location.href);
+
+  // Lắng nghe thay đổi lựa chọn
+  createdBy.addEventListener("change", () => {
+    const value = createdBy.value;
+    if(value) {
+      url.searchParams.set("createdBy", value);
+    } else {
+      url.searchParams.delete("createdBy");
+    }
+    window.location.href = url.href;
+  })
+
+  // Hiển thị lựa chọn mặc định
+  const valueCurrent = url.searchParams.get("createdBy");
+  if(valueCurrent) {
+    createdBy.value = valueCurrent;
+  }
+}
+// End Filter Created By
+
+// Lọc theo ngày tạo
+// Filter Start Date
+const StartDate = document.querySelector("[start-date]");
+if(StartDate) {
+  const url = new URL(window.location.href);
+
+  // Lắng nghe thay đổi lựa chọn
+  StartDate.addEventListener("change", () => {
+    const value = StartDate.value;
+    if(value) {
+      url.searchParams.set("startDate", value);
+    } else {
+      url.searchParams.delete("startDate");
+    }
+    window.location.href = url.href;
+  })
+
+  // Hiển thị lựa chọn mặc định
+  const valueCurrent = url.searchParams.get("startDate");
+  if(valueCurrent) {
+    StartDate.value = valueCurrent;
+  }
+}
+// End Filter Start Date
+
+// Filter End Date
+const EndDate = document.querySelector("[end-date]");
+if(EndDate) {
+  const url = new URL(window.location.href);
+
+  // Lắng nghe thay đổi lựa chọn
+  EndDate.addEventListener("change", () => {
+    const value = EndDate.value;
+    if(value) {
+      url.searchParams.set("endDate", value);
+    } else {
+      url.searchParams.delete("endDate");
+    }
+    window.location.href = url.href;
+  })
+
+  // Hiển thị lựa chọn mặc định
+  const valueCurrent = url.searchParams.get("endDate");
+  if(valueCurrent) {
+    EndDate.value = valueCurrent;
+  }
+}
+
+// end Lọc theo ngày tạo
+
+//Lọc theo danh mục 
+const selectCategory = document.querySelector("[select-category]");
+if(selectCategory) {
+  const url = new URL(window.location.href);
+
+  // Lắng nghe thay đổi lựa chọn
+  selectCategory.addEventListener("change", () => {
+    const value = selectCategory.value;
+    if(value) {
+      url.searchParams.set("category", value);
+    } else {
+      url.searchParams.delete("category");
+    }
+    window.location.href = url.href;
+  })
+
+  // Hiển thị lựa chọn mặc định
+  const valueCurrent = url.searchParams.get("category");
+  if(valueCurrent) {
+    selectCategory.value = valueCurrent;
+  }
+}
+
+// end Lọc theo danh mục
+
+// Filter Reset
+const Reset = document.querySelector("[reset]");
+if(Reset) {
+  const url = new URL(window.location.href);
+
+  Reset.addEventListener("click", () => {
+    console.log(url) // in ra cảm nhận url
+    url.search = "";
+    window.location.href = url.href;
+
+  })
+}
+// End Filter Reset
+
+// Check all tour
+const checkAllTour = document.querySelector("[check-all-tour]");
+if(checkAllTour) {
+  checkAllTour.addEventListener("click", () => {
+    const listCheckItem = document.querySelectorAll("[check-item-tour]");
+      listCheckItem.forEach(item => {
+        item.checked = checkAllTour.checked;
+      })
+  })
+}
+// End Check all tour
+
+
+// change multi tour
+const changeMultiTour = document.querySelector("[change-multi-tour]");
+if(changeMultiTour) {
+  const select = changeMultiTour.querySelector("select");
+  const button = changeMultiTour.querySelector("button");
+  button.addEventListener("click", () => {
+    const valueOption = select.value;
+    const listInputChecked = document.querySelectorAll(`[check-item-tour]:checked`)
+    if(valueOption && listInputChecked.length > 0) {
+      const ids= [];
+      listInputChecked.forEach(item => {
+        const id = item.getAttribute("check-item-tour");
+        ids.push(id);
+      })
+      const dataFinal = {
+        option: valueOption,
+        ids: ids
+      };  
+      const dataApi = changeMultiTour.getAttribute("data-api");
+      fetch(dataApi, {
+        method: "PATCH",
+        headers: {          
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dataFinal)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if(data.code == "error") {
+            alert(data.message);
+          } 
+          if(data.code == "success") {
+            window.location.reload();
+          }     
+        })
+    }
+  })
+
+}
+
+// end change multi tour
+// Search
+const Search = document.querySelector("[search]");
+if(Search) {
+  const url = new URL(window.location.href);
+
+  // Lắng nghe bấm enter thì tìm kiếm
+  Search.addEventListener("keyup", (event)=> {
+    if(event.code == "Enter") {
+      const value = Search.value;
+      if(value) {
+        url.searchParams.set("keyword", value);
+      } else {
+        url.searchParams.delete("keyword");
+      }
+      window.location.href = url.href;
+    }
+  })
+
+  // Hiển thị lựa chọn mặc định
+  const valueCurrent = url.searchParams.get("keyword");
+  if(valueCurrent) {
+    Search.value = valueCurrent;
+  }
+}
+// End Search
+
+// Pagination
+const paginationTour = document.querySelector("[pagination]");
+if(paginationTour) {
+  const url = new URL(window.location.href);
+
+  // Lắng nghe sự kiện change
+  paginationTour.addEventListener("change", () => {
+    const value = paginationTour.value;
+    if(value) {
+      url.searchParams.set("page", value);
+    } else {
+      url.searchParams.delete("page");
+    }
+    window.location.href = url.href;
+  })
+
+  // Hiển thị lựa chọn mặc định
+  const valueCurrent = url.searchParams.get("page");
+  if(valueCurrent) {
+    paginationTour.value = valueCurrent;
+  }
+}
+// End Pagination

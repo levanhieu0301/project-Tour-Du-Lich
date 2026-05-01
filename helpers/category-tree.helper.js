@@ -13,5 +13,21 @@ const CategoryTree = (listCategory, parentId = "") => {
   return tree;
 
 }
+const getAllChildIds = (listCategory, parentId) => {
+  let result = [];
 
+  listCategory.forEach(item => {
+    // So sánh đúng kiểu ObjectId
+    if(item.parent && item.parent.toString() === parentId.toString()){
+      result.push(item._id.toString());
+
+      const childIds = getAllChildIds(listCategory, item._id);
+      result = result.concat(childIds);
+    }
+  });
+
+  return result;
+};
+
+module.exports.getAllChildIds = getAllChildIds;
 module.exports.CategoryTree = CategoryTree;
