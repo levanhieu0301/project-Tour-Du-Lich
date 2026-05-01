@@ -354,3 +354,23 @@ module.exports.undoPatch = async (req, res) => {
     });
   }
 }
+module.exports.deleteDestroyPatch = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    await Tour.deleteOne({
+      _id: id
+    });
+
+
+    res.json({
+      code: "success",
+        message: "Xóa vĩnh viễn tour thành công"
+    });
+  } catch (error) {
+    res.json({
+      code: "error",
+      message: error
+    });
+  }
+}
