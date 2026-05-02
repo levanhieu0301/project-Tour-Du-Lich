@@ -26,6 +26,6 @@ router.patch(
   ]),
   settingController.WebsiteInfoPatch)
 
-
+router.post('/roleCreate',settingController.createRolePost) 
 
 module.exports = router;

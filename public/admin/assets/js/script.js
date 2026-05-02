@@ -418,7 +418,7 @@ if(settingWebsiteInfoForm) {
         // if(imageDefault.includes(favicon.name)) {
         //   favicon = null;
         // }
-      }
+      } 
 
 
       console.log(createWebsite);

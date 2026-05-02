@@ -418,9 +418,10 @@ if(settingAccountAdminCreateForm) {
 
 
 // Setting Role Create Form
-const settingRoleCreateForm = document.querySelector("#setting-role-create-form");
-if(settingRoleCreateForm) {
-  const validation = new JustValidate('#setting-role-create-form');
+const RoleCreateForm = document.querySelector('#setting-create-role'); 
+console.log(RoleCreateForm);
+if(RoleCreateForm) {
+  const validation = new JustValidate('#setting-create-role');
 
   validation
     .addField('#name', [
@@ -430,23 +431,49 @@ if(settingRoleCreateForm) {
       },
     ])
     .onSuccess((event) => {
+       event.preventDefault();
       const name = event.target.name.value;
       const description = event.target.description.value;
       const permissions = [];
 
       // permissions
-      const listElementPermission = settingRoleCreateForm.querySelectorAll('input[name="permissions"]:checked');
+      const listElementPermission = RoleCreateForm.querySelectorAll('input[name="permissions"]:checked');
       listElementPermission.forEach(input => {
         permissions.push(input.value);
       });
       // End permissions
-
       console.log(name);
       console.log(description);
       console.log(permissions);
+
+      const dataFinal = {
+        name: name,
+        description: description,
+        permissions: permissions
+      };
+
+      fetch(`/${pathAdmin}/setting/roleCreate`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataFinal),
+      })
+        .then(res => res.json())
+        .then(data => {
+          if(data.code == "error") {
+            alert(data.message);
+          }
+
+          if(data.code == "success") {
+            window.location.href = `/${pathAdmin}/setting/list-role`;
+          }
+        })
+
     })
   ;
 }
+
 // End Setting Role Create Form
 
 

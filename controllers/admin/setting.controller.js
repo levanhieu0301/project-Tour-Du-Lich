@@ -1,4 +1,6 @@
 const SettingWebsiteInfo = require("../../models/setting-website-info.model");
+const Role = require("../../models/role.model")
+const permissions = require("../../config/client/permission");
 
 module.exports.list = (req, res) => {
     res.render('admin/pages/setting-list', {
@@ -17,7 +19,8 @@ module.exports.listAccountAdmin = (req, res) => {
 }
 module.exports.createRole = (req, res) => {
     res.render('admin/pages/setting-role-create', {
-        pageTitle: 'Tạo nhóm quyền'
+        pageTitle: 'Tạo nhóm quyền',
+        permissionList: permissions.permissionList
     });
 }
 module.exports.listRole = (req, res) => {
@@ -66,4 +69,19 @@ module.exports.WebsiteInfoPatch = async(req, res) => {
         code: "success",
         message: 'Thông tin website đã được cập nhật thành công'
     });
+}
+module.exports.createRolePost = async (req, res) => {
+
+    req.body.createdBy = req.account.id;
+    req.body.updatedBy = req.account.id;
+
+    const newRecord = new Role(req.body);
+    await newRecord.save();
+
+
+    res.json({      
+        code: "success",
+        message: 'Tạo nhóm quyền thành công'
+    }); 
+
 }
