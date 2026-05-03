@@ -23,9 +23,14 @@ module.exports.createRole = (req, res) => {
         permissionList: permissions.permissionList
     });
 }
-module.exports.listRole = (req, res) => {
+module.exports.listRole = async (req, res) => {
+    const roleList = await Role.find({
+        deleted: false
+    });
+
     res.render('admin/pages/setting-role-list', {
-        pageTitle: 'Nhóm quyền'
+        pageTitle: 'Nhóm quyền',
+        roleList: roleList
     });
 }
 module.exports.websiteInfo = async (req, res) => {

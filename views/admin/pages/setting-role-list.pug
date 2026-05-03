@@ -33,31 +33,22 @@ block main
                         th Mô tả ngắn
                         th Hành động
                 tbody
-                    tr
-                        td(class="inner-center")
-                            input(type="checkbox" class="inner-check")
-                        td Quản trị viên
-                        td Có đầy đủ các quyền
-                        td
-                            .inner-buttons
-                                button(class="inner-edit") <i class="fa-regular fa-pen-to-square"></i>
-                                button(class="inner-delete") <i class="fa-regular fa-trash-can"></i>
-                    tr
-                        td(class="inner-center")
-                            input(type="checkbox" class="inner-check")
-                        td Quản lý tour
-                        td Có đầy đủ quyền liên quan đến tour
-                        td
-                            .inner-buttons
-                                button(class="inner-edit") <i class="fa-regular fa-pen-to-square"></i>
-                                button(class="inner-delete") <i class="fa-regular fa-trash-can"></i>
-                    tr
-                        td(class="inner-center")
-                            input(type="checkbox" class="inner-check")
-                        td Quản lý đơn hàng
-                        td Có đầy đủ quyền liên quan đến đơn hàng
-                        td
-                            .inner-buttons
-                                button(class="inner-edit") <i class="fa-regular fa-pen-to-square"></i>
-                                button(class="inner-delete") <i class="fa-regular fa-trash-can"></i>          
+                    each item in roleList
+                        tr
+                            td(class="inner-center")
+                                input(type="checkbox" class="inner-check" value = item.id)
+                            td #{item.name}
+                            td #{item.description}
+                            td
+                                .inner-buttons
+                                    a(
+                                        href=`/${pathAdmin}/setting/role/edit/${item.id}`
+                                        class="inner-edit"
+                                    ) <i class="fa-regular fa-pen-to-square"></i>
+                                    button(
+                                        class="inner-delete"
+                                        button-delete
+                                        data-api=`/${pathAdmin}/setting/role/delete/${item.id}`
+                                    ) <i class="fa-regular fa-trash-can"></i>
+
     //- End Section-6
