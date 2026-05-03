@@ -10,7 +10,7 @@ const schema = new mongoose.Schema(
     positionCompany: String,
     status: String,
     password: String,
-    avatar: String,
+    logo: String,
     createdBy: String,
     updatedBy: String,
     deleted: {

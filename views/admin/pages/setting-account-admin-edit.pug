@@ -1,0 +1,47 @@
+extends ../layouts/default.pug
+
+block main
+    h2.box-title Chỉnh sửa tài khoản quản trị
+    //- Section-8
+    .section-8
+        form#setting-account-admin-edit-form
+            .inner-group(style="display: none;")
+                input(type="text" name="id" value=accountAdminDetail.id)
+            .inner-group 
+                label(class="inner-label" for="name") Họ tên
+                input(type="text" id="name" name="name" value= accountAdminDetail.fullName)
+            .inner-group 
+                label(class="inner-label" for="email") Email
+                input(type="text" id="email" name="email" value= accountAdminDetail.email)
+            .inner-group 
+                label(class="inner-label" for="phone") Số điện thoại
+                input(type="number" id="phone" name="phone" value= accountAdminDetail.phone)
+            .inner-group 
+                label(class="inner-label" for="role") Nhóm quyền
+                select(id="role" name="role")
+                    each role in roleList
+                        option(
+                            value=role.id
+                            selected=accountAdminDetail.role.includes(role.id)
+                        ) #{role.name}
+            .inner-group 
+                label(class="inner-label" for="positionCompany") Chức vụ
+                input(type="text" id="positionCompany" name="positionCompany" value = accountAdminDetail.positionCompany)
+            .inner-group 
+                label(class="inner-label" for="status") Trạng thái
+                select(id="status" name="status")
+                    option(value="initial" selected=accountAdminDetail.status === "initial") Khởi tạo
+                    option(value="active" selected=accountAdminDetail.status === "active") Hoạt động
+                    option(value="inactive" selected=accountAdminDetail.status === "inactive") Tạm dừng
+            .inner-group 
+                label(class="inner-label" for="password") Mật khẩu
+                input(type="text" id="password" name="password")
+            .inner-group.inner-two-col
+                label(class="inner-label" for="logo") Ảnh đại diện
+                div(class="inner-upload-image" image-default=accountAdminDetail.logo)
+                    input(type="file" id="logo" name="logo" accept="image/*" filepond-image)
+            .inner-group.inner-button
+                button Cập nhật
+        .inner-back 
+            a(href=`/${pathAdmin}/setting/list-account-admin`) Quay lại danh sách
+    //-End Section-8

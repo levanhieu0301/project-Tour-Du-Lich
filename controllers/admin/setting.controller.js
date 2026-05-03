@@ -182,3 +182,54 @@ module.exports.accountAdminCreatePost = async (req, res) => {
     message: "Tạo tài khoản quản trị thành công!"
   });
 }
+module.exports.accountAdminEdit = async (req, res) => {
+  try {
+    const roleList = await Role.find({
+      deleted: false
+    });
+
+    const id = req.params.id;
+    const accountAdminDetail = await AccountAdmin.findOne({
+      _id: id,
+      deleted: false
+    });
+  
+    res.render("admin/pages/setting-account-admin-edit", {
+      pageTitle: "Chỉnh sửa tài khoản quản trị",
+      roleList: roleList,
+      accountAdminDetail: accountAdminDetail
+    });
+  } catch (error) {
+    res.redirect(`/${pathAdmin}/setting/list-account-admin`);
+  }
+}
+module.exports.accountAdminEditPatch = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    req.body.updatedBy = req.account.id;
+    if(req.file) {
+      req.body.logo = req.file.path;
+    } else {
+      delete req.body.logo;
+    }
+    
+    // Mã hóa mật khẩu với bcrypt
+    if(req.body.password) {
+      const salt = await bcrypt.genSalt(10); // Tạo salt - Chuỗi ngẫu nhiên có 10 ký tự
+      req.body.password = await bcrypt.hash(req.body.password, salt); // Mã hóa mật khẩu
+    }
+
+    await AccountAdmin.updateOne({
+      _id: id,
+      deleted: false
+    }, req.body);
+
+    res.json({
+      code: "success",
+        message: "Cập nhật tài khoản quản trị thành công!"
+    });
+  } catch (error) {
+    res.redirect(`/${pathAdmin}/setting/list-account-admin`);
+  }
+}

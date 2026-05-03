@@ -18,6 +18,8 @@ router.get('/edit/:id',settingController.edit)
 
 router.patch('/role/edit/:id', settingController.roleEditPatch)
 router.post('/create-account-admin', upload.single("logo"), settingController.accountAdminCreatePost)
+router.get('/account-admin/edit/:id', settingController.accountAdminEdit)
+router.patch('/account-admin/edit/:id', upload.single("logo"), settingController.accountAdminEditPatch)
 router.patch(
   '/website-info', 
   upload.fields([
