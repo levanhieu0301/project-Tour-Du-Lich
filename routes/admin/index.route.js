@@ -16,7 +16,7 @@ router.use('/tours',authMiddleware.verifyToken, toursRoute);
 router.use('/oder',authMiddleware.verifyToken, oderRoute);
 router.use('/user',authMiddleware.verifyToken, userRoute);
 router.use('/contact',authMiddleware.verifyToken, contactRoute);
-router.use('/setting',authMiddleware.verifyToken, settingRoute);
+router.use('/setting',authMiddleware.verifyToken, settingRoute); 
 
 // router.get('/*', (req, res) => {
 //     res.render('admin/pages/Error', {

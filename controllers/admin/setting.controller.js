@@ -90,3 +90,39 @@ module.exports.createRolePost = async (req, res) => {
     }); 
 
 }
+module.exports.edit = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const roleDetail = await Role.findOne({
+      _id: id,
+      deleted: false
+    });
+
+    res.render("admin/pages/setting-role-edit", {
+      pageTitle: "Chỉnh sửa nhóm quyền",
+      permissionList: permissions.permissionList,
+      roleDetail: roleDetail
+    });
+  } catch (error) {
+    res.redirect(`/${pathAdmin}/setting/list-role`);
+  }
+}
+
+module.exports.roleEditPatch = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    await Role.updateOne({
+      _id: id,
+      deleted: false
+    }, req.body);
+
+    res.json({
+      code: 'success',
+      message: 'Cập nhật nhóm quyền thành công'
+    })
+  } catch (error) {
+    res.redirect(`/${pathAdmin}/setting/list-role`);
+  }
+}
