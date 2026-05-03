@@ -313,221 +313,246 @@ if(resetPasswordForm) {
 // End Reset Password Form
 
 
-// Setting Account Admin Create Form
-const settingAccountAdminCreateForm = document.querySelector("#setting-account-admin-create-form");
-if(settingAccountAdminCreateForm) {
-  const validation = new JustValidate('#setting-account-admin-create-form');
+// // Setting Account Admin Create Form
+// const settingAccountAdminCreateForm = document.querySelector("#setting-account-admin-create-form");
+// if(settingAccountAdminCreateForm) {
+//   const validation = new JustValidate('#setting-account-admin-create-form');
 
-  validation
-    .addField('#name', [
-      {
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập họ tên!'
-      },
-      {
-        rule: 'minLength',
-        value: 5,
-        errorMessage: 'Họ tên phải có ít nhất 5 ký tự!',
-      },
-      {
-        rule: 'maxLength',
-        value: 50,
-        errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
-      },
-    ])
-    .addField('#email', [
-      {
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập email!'
-      },
-      {
-        rule: 'email',
-        errorMessage: 'Email không đúng định dạng!',
-      },
-    ])
-    .addField('#phone', [
-      {
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập số điện thoại!'
-      },
-      {
-        rule: 'customRegexp',
-        value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
-        errorMessage: 'Số điện thoại không đúng định dạng!'
-      },
-    ])
-    .addField('#positionCompany', [
-      {
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập chức vụ!'
-      },
-    ])
-    .addField('#password', [
-      {
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập mật khẩu!',
-      },
-      {
-        validator: (value) => value.length >= 8,
-        errorMessage: 'Mật khẩu phải chứa ít nhất 8 ký tự!',
-      },
-      {
-        validator: (value) => /[A-Z]/.test(value),
-        errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái in hoa!',
-      },
-      {
-        validator: (value) => /[a-z]/.test(value),
-        errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái thường!',
-      },
-      {
-        validator: (value) => /\d/.test(value),
-        errorMessage: 'Mật khẩu phải chứa ít nhất một chữ số!',
-      },
-      {
-        validator: (value) => /[@$!%*?&]/.test(value),
-        errorMessage: 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt!',
-      },
-    ])
-    .onSuccess((event) => {
-      const fullName = event.target.name.value;
-      const email = event.target.email.value;
-      const phone = event.target.phone.value;
-      const role = event.target.role.value;
-      const positionCompany = event.target.positionCompany.value;
-      const status = event.target.status.value;
-      const password = event.target.password.value;
-      const avatars = filePond.logo.getFiles();
-      let logo = null;
-      if(avatars.length > 0) {
-        logo = avatars[0].file;
-      }
+//   validation
+//     .addField('#name', [
+//       {
+//         rule: 'required',
+//         errorMessage: 'Vui lòng nhập họ tên!'
+//       },
+//       {
+//         rule: 'minLength',
+//         value: 5,
+//         errorMessage: 'Họ tên phải có ít nhất 5 ký tự!',
+//       },
+//       {
+//         rule: 'maxLength',
+//         value: 50,
+//         errorMessage: 'Họ tên không được vượt quá 50 ký tự!',
+//       },
+//     ])
+//     .addField('#email', [
+//       {
+//         rule: 'required',
+//         errorMessage: 'Vui lòng nhập email!'
+//       },
+//       {
+//         rule: 'email',
+//         errorMessage: 'Email không đúng định dạng!',
+//       },
+//     ])
+//     .addField('#phone', [
+//       {
+//         rule: 'required',
+//         errorMessage: 'Vui lòng nhập số điện thoại!'
+//       },
+//       {
+//         rule: 'customRegexp',
+//         value: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
+//         errorMessage: 'Số điện thoại không đúng định dạng!'
+//       },
+//     ])
+//     .addField('#positionCompany', [
+//       {
+//         rule: 'required',
+//         errorMessage: 'Vui lòng nhập chức vụ!'
+//       },
+//     ])
+//     .addField('#password', [
+//       {
+//         rule: 'required',
+//         errorMessage: 'Vui lòng nhập mật khẩu!',
+//       },
+//       {
+//         validator: (value) => value.length >= 8,
+//         errorMessage: 'Mật khẩu phải chứa ít nhất 8 ký tự!',
+//       },
+//       {
+//         validator: (value) => /[A-Z]/.test(value),
+//         errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái in hoa!',
+//       },
+//       {
+//         validator: (value) => /[a-z]/.test(value),
+//         errorMessage: 'Mật khẩu phải chứa ít nhất một chữ cái thường!',
+//       },
+//       {
+//         validator: (value) => /\d/.test(value),
+//         errorMessage: 'Mật khẩu phải chứa ít nhất một chữ số!',
+//       },
+//       {
+//         validator: (value) => /[@$!%*?&]/.test(value),
+//         errorMessage: 'Mật khẩu phải chứa ít nhất một ký tự đặc biệt!',
+//       },
+//     ])
+//     .onSuccess((event) => {
+//       const fullName = event.target.name.value;
+//       const email = event.target.email.value;
+//       const phone = event.target.phone.value;
+//       const role = event.target.role.value;
+//       const positionCompany = event.target.positionCompany.value;
+//       const status = event.target.status.value;
+//       const password = event.target.password.value;
+//       const avatars = filePond.logo.getFiles();
+//       let logo = null;
+//       if(avatars.length > 0) {
+//         logo = avatars[0].file;
+//       }
 
-      console.log(fullName);
-      console.log(email);
-      console.log(phone);
-      console.log(role);
-      console.log(positionCompany);
-      console.log(status);
-      console.log(password);
-      console.log(logo);
-    })
-  ;
-}
-// End Setting Account Admin Create Form
+//       console.log(fullName);
+//       console.log(email);
+//       console.log(phone);
+//       console.log(role);
+//       console.log(positionCompany);
+//       console.log(status);
+//       console.log(password);
+//       console.log(logo);
+//        const formData = new FormData();
+//       formData.append("fullName", fullName);
+//       formData.append("email", email);
+//       formData.append("phone", phone);
+//       formData.append("role", role);
+//       formData.append("positionCompany", positionCompany);
+//       formData.append("status", status);
+//       formData.append("password", password);
+//       formData.append("logo", logo);
+
+//       fetch(`/${pathAdmin}/setting/create-account-admin`, {
+//         method: "POST",
+//         body: formData,
+//       })
+//         .then(res => res.json())
+//         .then(data => {
+//           if(data.code == "error") {
+//             alert(data.message);
+//           }
+
+//           if(data.code == "success") {
+//             window.location.href = `/${pathAdmin}/setting/list-account-admin`;
+//           }
+//         })
+
+//     })
+//   ;
+// }
+// // End Setting Account Admin Create Form
 
 
 
-// Setting Role Create Form
-const RoleCreateForm = document.querySelector('#setting-create-role'); 
-console.log(RoleCreateForm);
-if(RoleCreateForm) {
-  const validation = new JustValidate('#setting-create-role');
+// // Setting Role Create Form
+// const RoleCreateForm = document.querySelector('#setting-create-role'); 
+// console.log(RoleCreateForm);
+// if(RoleCreateForm) {
+//   const validation = new JustValidate('#setting-create-role');
 
-  validation
-    .addField('#name', [
-      {
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập tên nhóm quyền!'
-      },
-    ])
-    .onSuccess((event) => {
-       event.preventDefault();
-      const name = event.target.name.value;
-      const description = event.target.description.value;
-      const permissions = [];
+//   validation
+//     .addField('#name', [
+//       {
+//         rule: 'required',
+//         errorMessage: 'Vui lòng nhập tên nhóm quyền!'
+//       },
+//     ])
+//     .onSuccess((event) => {
+//        event.preventDefault();
+//       const name = event.target.name.value;
+//       const description = event.target.description.value;
+//       const permissions = [];
 
-      // permissions
-      const listElementPermission = RoleCreateForm.querySelectorAll('input[name="permissions"]:checked');
-      listElementPermission.forEach(input => {
-        permissions.push(input.value);
-      });
-      // End permissions
-      console.log(name);
-      console.log(description);
-      console.log(permissions);
+//       // permissions
+//       const listElementPermission = RoleCreateForm.querySelectorAll('input[name="permissions"]:checked');
+//       listElementPermission.forEach(input => {
+//         permissions.push(input.value);
+//       });
+//       // End permissions
+//       console.log(name);
+//       console.log(description);
+//       console.log(permissions);
 
-      const dataFinal = {
-        name: name,
-        description: description,
-        permissions: permissions
-      };
+//       const dataFinal = {
+//         name: name,
+//         description: description,
+//         permissions: permissions
+//       };
 
-      fetch(`/${pathAdmin}/setting/roleCreate`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataFinal),
-      })
-        .then(res => res.json())
-        .then(data => {
-          if(data.code == "error") {
-            alert(data.message);
-          }
+//       fetch(`/${pathAdmin}/setting/roleCreate`, {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(dataFinal),
+//       })
+//         .then(res => res.json())
+//         .then(data => {
+//           if(data.code == "error") {
+//             alert(data.message);
+//           }
 
-          if(data.code == "success") {
-            window.location.href = `/${pathAdmin}/setting/list-role`;
-          }
-        })
+//           if(data.code == "success") {
+//             window.location.href = `/${pathAdmin}/setting/list-role`;
+//           }
+//         })
 
-    })
-  ;
-}
+//     })
+//   ;
+// }
 
-// End Setting Role Create Form
+// // End Setting Role Create Form
 
-// Setting Role Edit Form
-const settingRoleEditForm = document.querySelector("#setting-role-edit-form");
-if(settingRoleEditForm) {
-  const validation = new JustValidate('#setting-role-edit-form');
+// // Setting Role Edit Form
+// const settingRoleEditForm = document.querySelector("#setting-role-edit-form");
+// if(settingRoleEditForm) {
+//   const validation = new JustValidate('#setting-role-edit-form');
 
-  validation
-    .addField('#name', [
-      {
-        rule: 'required',
-        errorMessage: 'Vui lòng nhập tên nhóm quyền!'
-      },
-    ])
-    .onSuccess((event) => {
-      const id = event.target.id.value;
-      const name = event.target.name.value;
-      const description = event.target.description.value;
-      const permissions = [];
+//   validation
+//     .addField('#name', [
+//       {
+//         rule: 'required',
+//         errorMessage: 'Vui lòng nhập tên nhóm quyền!'
+//       },
+//     ])
+//     .onSuccess((event) => {
+//       const id = event.target.id.value;
+//       const name = event.target.name.value;
+//       const description = event.target.description.value;
+//       const permissions = [];
 
-      // permissions
-      const listElementPermission = settingRoleEditForm.querySelectorAll('input[name="permissions"]:checked');
-      listElementPermission.forEach(input => {
-        permissions.push(input.value);
-      });
-      // End permissions
+//       // permissions
+//       const listElementPermission = settingRoleEditForm.querySelectorAll('input[name="permissions"]:checked');
+//       listElementPermission.forEach(input => {
+//         permissions.push(input.value);
+//       });
+//       // End permissions
 
-      const dataFinal = {
-        name: name,
-        description: description,
-        permissions: permissions
-      };
+//       const dataFinal = {
+//         name: name,
+//         description: description,
+//         permissions: permissions
+//       };
 
-      fetch(`/${pathAdmin}/setting/role/edit/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataFinal),
-      })
-        .then(res => res.json())
-        .then(data => {
-          if(data.code == "error") {
-            alert(data.message);
-          }
+//       fetch(`/${pathAdmin}/setting/role/edit/${id}`, {
+//         method: "PATCH",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(dataFinal),
+//       })
+//         .then(res => res.json())
+//         .then(data => {
+//           if(data.code == "error") {
+//             alert(data.message);
+//           }
 
-          if(data.code == "success") {
-            window.location.reload();
-          }
-        })
-    })
-  ;
-}
-// End Setting Role Edit Form
+//           if(data.code == "success") {
+//             window.location.reload();
+//           }
+//         })
+//     })
+//   ;
+// }
+// // End Setting Role Edit Form
 
 
 

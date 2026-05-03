@@ -7,34 +7,34 @@ block main
         form#setting-account-admin-create-form
             .inner-group 
                 label(class="inner-label" for="name") Họ tên
-                input(type="text" id="name" name="name" value="Lê Văn A")
+                input(type="text" id="name" name="name" value)
             .inner-group 
                 label(class="inner-label" for="email") Email
-                input(type="text" id="email" name="email" value="levana@gmail.com")
+                input(type="text" id="email" name="email" value)
             .inner-group 
                 label(class="inner-label" for="phone") Số điện thoại
-                input(type="number" id="phone" name="phone" value="01234568")
+                input(type="number" id="phone" name="phone" value)
             .inner-group 
                 label(class="inner-label" for="role") Nhóm quyền
                 select(id="role" name="role")
-                    option(value="") Quản trị viên
-                    option(value="") Admin
-                    option(value="") Sraff
+                    each role in roleList
+                        option(value=role.id) #{role.name}
             .inner-group 
                 label(class="inner-label" for="positionCompany") Chức vụ
-                input(type="text" id="positionCompany" name="positionCompany" value="Giám đốc")
+                input(type="text" id="positionCompany" name="positionCompany" value)
             .inner-group 
                 label(class="inner-label" for="status") Trạng thái
                 select(id="status" name="status")
-                    option(value="") Hoạt động
-                    option(value="") Dừng hoạt động
+                    option(value="initial") Khởi tạo
+                    option(value="active") Hoạt động
+                    option(value="inactive") Dừng hoạt động
             .inner-group 
                 label(class="inner-label" for="password") Mật khẩu
-                input(type="text" id="password" name="password" value="123456778")
+                input(type="text" id="password" name="password")
             .inner-group.inner-two-col
                 label(class="inner-label" for="logo") Ảnh đại diện
                 div(class="inner-upload-image")
-                    input(type="file" id="logo" name="logo" accept="image/*")
+                    input(type="file" id="logo" name="logo" accept="image/*" filepond-image)
             .inner-group.inner-button
                 button Tạo mới
         .inner-back 
