@@ -7,25 +7,25 @@ block main
         form#profile-edit-form
             .inner-group 
                 label(class="inner-label" for="name") Họ tên
-                input(type="text" id="name" name="name" value="Lê Văn A")
+                input(type="text" id="name" name="name" value=profileAcc.fullName)
             .inner-group 
                 label(class="inner-label" for="email") Email
-                input(type="text" id="email" name="email" value="levana@gmail.com")
+                input(type="text" id="email" name="email" value=profileAcc.email)
             .inner-group 
                 label(class="inner-label" for="phone") Số điện thoại
-                input(type="number" id="phone" name="phone" value="01234568")
+                input(type="number" id="phone" name="phone" value=profileAcc.phone)
             .inner-group 
                 label(class="inner-label" for="positionCompany") Chức vụ
-                input(type="text" id="positionCompany" name="positionCompany" value="Giám đốc" readonly)
+                input(type="text" id="positionCompany" name="positionCompany" value=profileAcc.positionCompany readonly)
             .inner-group 
                 label(class="inner-label" for="role") Nhóm quyền
-                input(type="text" id="role" name="role" value="Quản trị viên" readonly)
+                input(type="text" id="role" name="role" value=profileAcc.roleName readonly)
             .inner-group.inner-two-col
                 label(class="inner-label" for="logo") Ảnh đại diện
-                div(class="inner-upload-image")
-                    input(type="file" id="logo" name="avatar" accept="image/*")
+                div(class="inner-upload-image" image-default=profileAcc.logo)
+                    input(type="file" id="logo" name="avatar" accept="image/*" filepond-image)
             .inner-group.inner-button
-                button Tạo mới
+                button Cập nhật
         .inner-back 
-            a(href=`${pathAdmin}/user/list`) Quay lại danh sách
+            a(href=`/${pathAdmin}/user/changePassword`) Đổi mật khẩu
     //-End Section-8

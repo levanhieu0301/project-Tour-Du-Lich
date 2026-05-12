@@ -9,9 +9,9 @@ header.header
             span 6
         .inner-account 
             .inner-avatar 
-                img(src="/admin/assets/images/logo.svg", alt="logo")
+                img(src=account.avatar, alt="logo")
             .inner-text-account 
                 .inner-name #{account.fullName}
-                .inner-role Admin 
+                .inner-role #{account.role}
         button.inner-button-menu 
            <i class="fa-solid fa-bars"></i> 

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const AccountAdmin = require("../models/account-admin.model");
+const Role = require("../models/role.model");
 module.exports.verifyToken = async(req, res, next) => {  
 
 try {
@@ -19,9 +20,14 @@ try {
     res.redirect(`/${pathAdmin}/account/login`);
     return;
   }
+    const roleInfo = await Role.findOne({
+      _id: exitsAccount.role
+    });
   req.account = exitsAccount;
   res.locals.account = {
-    fullName: exitsAccount.fullName
+    fullName: exitsAccount.fullName,
+    avatar: exitsAccount.logo,
+    role: roleInfo.name
   };
   next();
 } catch (error) {

@@ -6,7 +6,7 @@ block main
     .section-8
         form#setting-account-admin-edit-form
             .inner-group(style="display: none;")
-                input(type="text" name="id" value=accountAdminDetail.id)
+                input(type="text" name="id" value=accountAdminDetail._id)
             .inner-group 
                 label(class="inner-label" for="name") Họ tên
                 input(type="text" id="name" name="name" value= accountAdminDetail.fullName)
@@ -19,11 +19,11 @@ block main
             .inner-group 
                 label(class="inner-label" for="role") Nhóm quyền
                 select(id="role" name="role")
-                    each role in roleList
+                    each item in roleList
                         option(
-                            value=role.id
-                            selected=accountAdminDetail.role.includes(role.id)
-                        ) #{role.name}
+                            value=item._id
+                            selected=String(accountAdminDetail.role || '') === String(item._id)
+                        ) #{item.name}
             .inner-group 
                 label(class="inner-label" for="positionCompany") Chức vụ
                 input(type="text" id="positionCompany" name="positionCompany" value = accountAdminDetail.positionCompany)

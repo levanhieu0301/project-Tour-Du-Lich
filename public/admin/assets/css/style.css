@@ -239,10 +239,11 @@ a {
 .header .inner-account .inner-avatar {
   width: 44px;
   height: 44px;
-  border-radius: 25%;
+  border-radius: 50%;
   overflow: hidden;
 }
-.header .inner-account .inner-avatar {
+.header .inner-account .inner-avatar img {
+  
   width: 100%;
   height: 100%;
   object-fit: cover;

@@ -20,9 +20,8 @@ module.exports.createAccountAdmin = async (req, res) => {
 }
 module.exports.listAccountAdmin = async (req, res) => {
     const accountAdminList = await AccountAdmin
-    .find({
-      deleted: false
-    }).sort({
+    .find({})
+    .sort({
       createdAt: "desc"
     });
 
@@ -184,13 +183,12 @@ module.exports.accountAdminCreatePost = async (req, res) => {
 }
 module.exports.accountAdminEdit = async (req, res) => {
   try {
-    const roleList = await Role.find({
-      deleted: false
-    });
 
     const id = req.params.id;
     const accountAdminDetail = await AccountAdmin.findOne({
       _id: id,
+    });
+    const roleList = await Role.find({
       deleted: false
     });
   
@@ -222,7 +220,6 @@ module.exports.accountAdminEditPatch = async (req, res) => {
 
     await AccountAdmin.updateOne({
       _id: id,
-      deleted: false
     }, req.body);
 
     res.json({
