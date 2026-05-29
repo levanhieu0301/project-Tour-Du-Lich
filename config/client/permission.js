@@ -22,6 +22,26 @@ module.exports.permissionList = [
   {
     label: "Xem danh sách tour",
     value: "tour-view"
-  }
+  },
+  {
+    label: "Xem tour",
+    value: "tour-view"
+  },
+  {
+    label: "Tạo tour",
+    value: "tour-create"
+  },
+  {
+    label: "Sửa tour",
+    value: "tour-edit"
+  },
+  {
+    label: "Xóa tour",
+    value: "tour-delete"
+  },
+  {
+    label: "Thùng rác tour",
+    value: "tour-trash"
+  },
 
 ]; 

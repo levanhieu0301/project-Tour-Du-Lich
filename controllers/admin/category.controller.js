@@ -132,25 +132,31 @@ module.exports.create = async (req, res) => {
     });
 }
 module.exports.createPost = async (req, res) => {
-    if(req.body.position){
+    if(req.role.permissions.includes("category-create")){
+        if(req.body.position){
         req.body.position = parseInt(req.body.position)
+        }else {
+            const totalRecord = await Category.countDocuments({})
+            req.body.position = totalRecord + 1;
+        }
+        req.body.createdBy = req.account.id
+        req.body.updatedBy = req.account.id
+
+        req.body.avatar = req.file? req.file.path : ""
+
+        const newRecord = new Category(req.body)
+        await newRecord.save();
+        res.json({
+            code: "success",
+            //message: "Tạo danh mục thành công"
+        })
     }else {
-        const totalRecord = await Category.countDocuments({})
-        req.body.position = totalRecord + 1;
+        res.json({
+            code: "error",
+            //message: "Tạo danh mục thành công"
+        })
     }
-    req.body.createdBy = req.account.id
-    req.body.updatedBy = req.account.id
-
-    req.body.avatar = req.file? req.file.path : ""
-
-    const newRecord = new Category(req.body)
-    await newRecord.save();
-
-    req.flash('success', 'Tạo danh mục thành công!');
-    res.json({
-        code: "success",
-        //message: "Tạo danh mục thành công"
-    })
+    
 }
 module.exports.edit = async (req, res) => {
     try {
@@ -179,7 +185,8 @@ module.exports.edit = async (req, res) => {
     }
 }       
 module.exports.editPatch = async (req, res) => {
-    try {
+    if(req.role.permissions.includes("category-edit")){
+        try {
         const id = req.params.id;
         const categoryInfo = await Category.findOne({
             _id: id,
@@ -214,6 +221,13 @@ module.exports.editPatch = async (req, res) => {
         });
 
     } catch (error) {
+        res.json({
+            code: "error",
+            message: "Có lỗi xảy ra, vui lòng thử lại!"
+        })
+    }
+
+    }else{
         res.json({
             code: "error",
             message: "Có lỗi xảy ra, vui lòng thử lại!"

@@ -24,10 +24,12 @@ try {
       _id: exitsAccount.role
     });
   req.account = exitsAccount;
+  req.role = roleInfo;
   res.locals.account = {
     fullName: exitsAccount.fullName,
     avatar: exitsAccount.logo,
-    role: roleInfo.name
+    role: roleInfo.name,
+    permissions: roleInfo.permissions
   };
   next();
 } catch (error) {
