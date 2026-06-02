@@ -4,6 +4,7 @@ const tourListRouter = require("./tour.route")
 const cartRouter = require("./cart.route") 
 const settingMiddleware = require("../../middlewares/client/setting.middleware")  
 const categoryMiddleware = require("../../middlewares/client/category.middleware")  
+
 router.use(settingMiddleware.settingInfo)
 router.use(categoryMiddleware.categoryList)
 
