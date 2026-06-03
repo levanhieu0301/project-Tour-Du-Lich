@@ -5,21 +5,21 @@ include ../mixins/product-item.pug
 
 block main
   // Box Breadcrumb
-  -
-    var breadcrumb = {
-      image: "/assets/css/images/Background Image.svg",
-      title: "Tour Nước Ngoài",
-      list: [
-        {
-          link: "/",
-          title: "Trang Chủ"
-        },
-        {
-          link: "/tours",
-          title: "Tour Nước Ngoài"
-        }
-      ]
-    };
+  //- -
+  //-   var breadcrumb = {
+  //-     image: "/assets/css/images/Background Image.svg",
+  //-     title: "Tour Nước Ngoài",
+  //-     list: [
+  //-       {
+  //-         link: "/",
+  //-         title: "Trang Chủ"
+  //-       },
+  //-       {
+  //-         link: "/tours",
+  //-         title: "Tour Nước Ngoài"
+  //-       }
+  //-     ]
+  //-   };
   +breadcrumb(breadcrumb)
   // End Box Breadcrumb
   // Section 9
@@ -151,14 +151,9 @@ block main
           // End Box Filter
         .inner-right
           .inner-info
-            h2.inner-title Tour Nước Ngoài
+            h2.inner-title #{breadcrumb.title}
             .inner-desc
-              | Du lịch Châu Á: là châu lục lớn và đông dân nhất thế giới. Châu
-              |   Á cũng có nhiều danh lam thắng cảnh đẹp tại một số quốc gia như
-              |   Hàn Quốc, Nhật Bản, Trung Quốc, Việt Nam,... và VK Travel là nhà
-              |   tổ chức du lịch chuyên nghiệp hàng đầu Châu Á, đã 5 lần liên
-              |   tiếp nhận giải TTG Travel Awards. Hãy cùng 28.Travel du lịch
-              |   Châu Á để tận hưởng những dịch vụ tốt nhất.
+              | !{categoryTitle.description}
           .inner-info-2
             .inner-sort
               .inner-label Sắp xếp :
@@ -183,7 +178,7 @@ block main
               i.fa-solid.fa-filter
           .inner-list-tour
             each item in productListSection9
-              +product-item(item)
+              //+product-item(item)
           // Pagination
           .box-pagination
             button

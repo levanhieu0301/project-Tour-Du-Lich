@@ -34,7 +34,7 @@ header.header
           each item in category
             li
               a(href=`/category/${item.slug}`) #{item.name}
-              if(item.children.length > 0)
+              if(item.children)
                 i.fa-solid.fa-caret-down
                 ul
                   each itemChild in item.children
