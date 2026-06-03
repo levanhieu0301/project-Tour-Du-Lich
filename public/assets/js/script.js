@@ -344,7 +344,7 @@ if (boxImagesMain){
 const emailForm = document.querySelector("#email-form");
 if(emailForm){
     const validator = new JustValidate('#email-form');
-    validator
+    validator 
         .addField('#email-input', [
             {
               rule: 'required',
@@ -357,7 +357,28 @@ if(emailForm){
         ])
         .onSuccess(( event ) => {
             const email = event.target.email.value; 
-            console.log(email);
+            const dataFinal = {
+                email: email,
+            };
+      
+            fetch(`/contact/create`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dataFinal),
+            })
+            .then(res => res.json())
+            .then(data => {
+            if(data.code == "error") {
+                alert(data.message);
+            }
+
+            if(data.code == "success") {
+                alert(data.message);
+                window.location.reload();
+            }
+            })
        
     });
 }
