@@ -172,13 +172,13 @@ block main
                   i.fa-solid.fa-eye
             .inner-count-record
               | Tất cả:
-              b 101 Tour
+              b #{tourListSection9.length} Tour
             button.inner-filter-mobile
               span.inner-title Bộ Lọc
               i.fa-solid.fa-filter
           .inner-list-tour
-            each item in productListSection9
-              //+product-item(item)
+            each item in tourListSection9
+              +product-item(item)
           // Pagination
           .box-pagination
             button
