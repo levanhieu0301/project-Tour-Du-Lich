@@ -457,3 +457,35 @@ if(oderForm){
 
 }
 // End oder-form
+
+// Bộ lọc tour 
+const boxFilterTour = document.querySelector(".box-filter");
+if(boxFilterTour){
+    const url = new URL(`${window.location.origin}/search`);
+    const buttonFilter = boxFilterTour.querySelector(".inner-button");
+    if(buttonFilter){
+        buttonFilter.addEventListener("click", () => {  
+            const filterList = [
+                "locationFrom",
+                "locationTo",
+                "departureDate",
+                "stockAdult",
+                "stockChildren",
+                "stockBaby",
+                "price",
+            ];
+            filterList.forEach(filter => {
+                const inputValue = boxFilterTour.querySelector(`[name="${filter}"]`).value;
+                if(inputValue){
+                    url.searchParams.set(filter, inputValue);
+                }else {
+                    url.searchParams.delete(filter);
+                }
+            })
+            window.location.href = url.href;
+
+        })
+    }
+}
+
+// End Bộ lọc tour

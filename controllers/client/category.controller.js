@@ -1,5 +1,7 @@
 const Category = require("../../models/categories.model");
 const Tour = require("../../models/tour.model");
+const City = require("../../models/cities.model");
+
 const moment = require("moment");
 module.exports.list = async (req, res) => {
     const breadcrumb = {
@@ -76,10 +78,16 @@ module.exports.list = async (req, res) => {
   }
 
   // End lấy hết tour theo category
+  
+
+  // Danh sách thành phố
+  const cityList = await City.find({});
+  // Hết Danh sách thành phố
   res.render("client/pages/tour-list", {
     pageTitle: "Danh sách tour",
     breadcrumb: breadcrumb,
     categoryTitle: category,
-    tourListSection9: tourListSection9
+    tourListSection9: tourListSection9,
+    cityList: cityList
   })
 }
