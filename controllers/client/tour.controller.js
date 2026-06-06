@@ -65,6 +65,7 @@ module.exports.tourDetail = async (req, res) => {
   res.render("client/pages/tour-detail", {
     pageTitle: "Chi tiết tour",
     breadcrumb: breadcrumb,
+    tourDetail: tourDetail
   })
 }
 }

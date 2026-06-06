@@ -37,69 +37,23 @@ block main
             #images-main.inner-images-main
               .swiper.swiper-box-images-main
                 .swiper-wrapper
-                  .swiper-slide
-                    .inner-image
-                      img(
-                        alt="" 
-                        src="/assets/css/images/3-1.jpg"
-                        )
-                  .swiper-slide
-                    .inner-image
-                      img(
-                        alt="" 
-                        src="/assets/css/images/3-2.jpg"
-                        )
-                  .swiper-slide
-                    .inner-image
-                      img(
-                        alt="" 
-                        src="/assets/css/images/3-3.jpg"
-                        )
-                  .swiper-slide
-                    .inner-image
-                      img(
-                        alt="" 
-                        src="/assets/css/images/8-1.jpg"
-                        )
-                  .swiper-slide
-                    .inner-image
-                      img(
-                        alt="" 
-                        src="/assets/css/images/8-2.jpg"
-                        )
+                  each image in tourDetail.images
+                    .swiper-slide
+                      .inner-image
+                        img(
+                          alt="" 
+                          src=image
+                          )
             .inner-images-thumb
               .swiper.swiper-box-images-thumb
                 .swiper-wrapper
-                  .swiper-slide
-                    .inner-image
-                      img(
-                        alt="" 
-                        src="/assets/css/images/3-1.jpg"
-                        )
-                  .swiper-slide
-                    .inner-image
-                      img(
-                        alt="" 
-                        src="/assets/css/images/3-2.jpg"
-                        )
-                  .swiper-slide
-                    .inner-image
-                      img(
-                        alt="" 
-                        src="/assets/css/images/3-3.jpg"
-                        )
-                  .swiper-slide
-                    .inner-image
-                      img(
-                        alt="" 
-                        src="/assets/css/images/8-1.jpg"
-                        )
-                  .swiper-slide
-                    .inner-image
-                      img(
-                        alt="" 
-                        src="/assets/css/images/8-2.jpg"
-                        )
+                  each image in tourDetail.images
+                    .swiper-slide
+                      .inner-image
+                        img(
+                          alt="" 
+                          src=image
+                          )
           .box-tour-info
             .inner-title Thông Tin Tour
             .inner-content
