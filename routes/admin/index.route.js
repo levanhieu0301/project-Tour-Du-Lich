@@ -8,6 +8,7 @@ const userRoute = require('./user.route');
 const infoRoute = require('./info.route');
 const contactRoute = require('./contact.route');
 const settingRoute = require('./setting.route');
+const uploadRoute = require('./upload.route');
 const authMiddleware = require('../../middlewares/auth.middlewares');
 
 router.use('/account', accountLoginRoute);
@@ -19,6 +20,8 @@ router.use('/user',authMiddleware.verifyToken, userRoute);
 router.use('/info',authMiddleware.verifyToken, infoRoute);
 router.use('/contact',authMiddleware.verifyToken, contactRoute);
 router.use('/setting',authMiddleware.verifyToken, settingRoute); 
+router.use('/upload', authMiddleware.verifyToken, uploadRoute);
+
 
 // router.get('/*', (req, res) => {
 //     res.render('admin/pages/Error', {
