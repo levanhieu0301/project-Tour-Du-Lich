@@ -4,6 +4,7 @@ const tourListRouter = require("./tour.route")
 const cartRouter = require("./cart.route")
 const contactRouter = require("./contact.route") 
 const categoryRouter = require("./category.route")
+const orderRoute = require("./order.route")
 
 const searchRoutes = require("./search.route");
 const settingMiddleware = require("../../middlewares/client/setting.middleware")  
@@ -17,7 +18,7 @@ router.use('/tours', tourListRouter)
 router.use('/cart', cartRouter)
 router.use('/contact', contactRouter)
 router.use("/category", categoryRouter)
-
+router.use("/order", orderRoute)
 router.use("/search", searchRoutes)
 
 

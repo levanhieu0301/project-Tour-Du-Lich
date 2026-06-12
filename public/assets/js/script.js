@@ -438,10 +438,68 @@ if(oderForm){
             const phone = event.target.phone.value; 
             const note = event.target.note.value; 
             const method = event.target.method.value; 
-            console.log(fullName);
-            console.log(phone);
-            console.log(note);
-            console.log(method);
+            // console.log(fullName);
+            // console.log(phone);
+            // console.log(note);
+            // console.log(method);
+            let cart = JSON.parse(localStorage.getItem("cart"))
+
+          
+            // Lấy ra tour đã check và số lượng lớn hơn > 0- dùng filter lọc ra 
+            cart = cart.filter(item => {
+              return (item.checked == true) && ((item.quantityAdult + item.quantityChildren + item.quantityBaby) > 0)
+            })
+            //Hết Lấy ra tour đã check và số lượng lớn hơn > 0- dùng filter lọc ra 
+
+            // Lấy data cần thiết - dùng hàm map lọc 
+            cart = cart.map(item => {
+              return {
+                tourId: item.tourId,
+                quantityAdult: item.quantityAdult,
+                quantityChildren: item.quantityChildren,
+                quantityBaby: item.quantityBaby,
+                locationFrom: item.locationFrom
+              }
+            })
+            // Hết lấy data cần thiết
+
+            if(cart.length > 0){
+              const dataFinal = {
+                fullName: fullName,
+                phone:phone,
+                note: note,
+                methodPayment: method,
+                items: cart
+              }
+              console.log(dataFinal)
+              fetch(`/order/create`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dataFinal),
+              })
+              .then(res => res.json())
+              .then(data => {
+                if(data.code == "error") {
+                  alert(data.message);
+                }
+      
+                if(data.code == "success") {
+                  // // Cập nhật lại giỏ hàng
+                  let cart = JSON.parse(localStorage.getItem("cart"))
+                  cart = cart.filter(item => {
+                    return item.checked == false
+                  })
+                  localStorage.setItem("cart", JSON.stringify(cart))
+                    // Chuyển sang trang đặt hàng thành công
+                  window.location.href = `/order/success?orderCode=${data.orderCode}&phone=${phone}`;
+                 
+                }
+              })
+            }
+
+
     });
     const listInputMethod = document.querySelectorAll(`input[name="method"]`);
     const inputBank = document.querySelector(".inner-info-bank");
@@ -647,13 +705,13 @@ const drawCart = () =>{
               </div>
               <div class="inner-product">
                 <div class="inner-image">
-                  <a href="/tour/detail/${item.slug}">
+                  <a href="/tours/detail/${item.slug}">
                     <img alt="${item.name}" src="${item.avatar}">
                   </a>
                 </div>
                 <div class="inner-content">
                   <div class="inner-title">
-                    <a href="/tour/detail/${item.slug}">${item.name}</a>
+                    <a href="/tours/detail/${item.slug}">${item.name}</a>
                   </div>
                   <div class="inner-meta">
                     <div class="inner-meta-item">Mã Tour: <b>123456789</b>
