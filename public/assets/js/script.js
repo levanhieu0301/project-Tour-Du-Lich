@@ -468,7 +468,7 @@ if(oderForm){
                 fullName: fullName,
                 phone:phone,
                 note: note,
-                methodPayment: method,
+                paymentMethod: method,
                 items: cart
               }
               console.log(dataFinal)
