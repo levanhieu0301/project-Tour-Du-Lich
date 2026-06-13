@@ -570,7 +570,8 @@ a {
   border-radius: 8px;
   background-color: #fafbfd;
 }
-.table-1 table tbody tr td .inner-buttons button {
+.table-1 table tbody tr td .inner-buttons button,
+.table-1 table tbody tr td .inner-buttons a {
   font-size: 15px;
   padding: 8.5px 16.5px;
   border: 0;
@@ -579,6 +580,7 @@ a {
   background-color: transparent;
   border-right: 1px solid #d5d5d5;
 }
+
 .table-1 table tbody tr td .inner-buttons button:last-child {
   border-right: 0;
 }

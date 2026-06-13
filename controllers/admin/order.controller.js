@@ -1,6 +1,7 @@
 const moment = require("moment");
 const Order = require("../../models/order.model");
 const Tour = require("../../models/tour.model");
+const City = require("../../models/cities.model")
 
 module.exports.list =async  (req, res) => {
     const find = {
@@ -67,8 +68,54 @@ module.exports.list =async  (req, res) => {
         orderList: orderList
     });
 }
-module.exports.edit = (req, res) => {
-    res.render('admin/pages/oder-edit', {
-        pageTitle: 'Chỉnh sửa đơn hàng'
+module.exports.edit = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const orderDetail = await Order.findOne({
+      _id: id
+    })
+
+    orderDetail.createdAtFormat = moment(orderDetail.createdAt).format("YYYY-MM-DDTHH:mm");
+
+    for (const item of orderDetail.items) {
+      const tourInfo = await Tour.findOne({
+        _id: item.tourId
+      })
+
+      if(tourInfo) {
+        item.avatar = tourInfo.avatar;
+        item.name = tourInfo.name;
+        item.departureDateFormat = moment(item.departureDate).format("DD/MM/YYYY");
+
+        const city = await City.findOne({
+          _id: item.locationFrom
+        })
+        item.locationFromName = city.name;
+      }
+    }
+  
+    res.render("admin/pages/order-edit", {
+      pageTitle: `Đơn hàng: ${orderDetail.code}`,
+      orderDetail: orderDetail
     });
+  } catch (error) {
+    res.redirect(`/${pathAdmin}/order/list`);
+
+  }
+}
+module.exports.editPatch = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    await Order.updateOne({
+      _id: id
+    }, req.body);
+
+    res.json({
+      code: "success"
+    });
+  } catch (error) {
+    res.redirect(`/${pathAdmin}/order/list`);
+  }
 }
