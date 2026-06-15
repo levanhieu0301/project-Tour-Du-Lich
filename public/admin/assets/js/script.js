@@ -126,20 +126,60 @@ if(listFilepondImageMulti.length > 0) {
 // Chart doanh thu
 const revenueChart = document.querySelector("#revenue-chart");
 if (revenueChart){
-    new Chart(revenueChart, {
+    const now = new Date();
+    // Tháng , năm hiện tại
+    const monthCurrent = now.getMonth() + 1;
+    const yearCurrent = now.getFullYear();
+    // Tháng, năm trước
+    const previous = new Date(yearCurrent, now.getMonth()-1, 1)
+    const previousMonth = previous.getMonth() + 1
+    const previousYear = previous.getFullYear()
+    // Lấy ra số ngày tháng hiện tại và tháng trước
+    const dayCurrent = new Date(yearCurrent, monthCurrent, 0).getDate();
+    const dayPrevious = new Date(previousYear, previousMonth, 0).getDate();
+    // Tháng nào nhiều ngày thì hiển thị lên
+    const day = dayCurrent > dayPrevious? dayCurrent: dayPrevious
+    const dayArray = [];
+    for(let i = 1; i <= day ; i++){
+      dayArray.push(i)
+    }
+
+  const dataFinal = {
+    monthCurrent: monthCurrent,
+    yearCurrent: yearCurrent,
+    previousMonth: previousMonth,
+    previousYear: previousYear,
+    dayArray: dayArray
+  };
+
+  fetch(`/${pathAdmin}/dashboard/revenue-chart`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(dataFinal)
+  })
+  .then(res => res.json())
+  .then(data => {
+      if(data.code == "error") {
+        alert(data.message);
+      }
+
+      if(data.code == "success") {
+        new Chart(revenueChart, {
         type: 'line',
         data: {
-            labels:["01", "02", "03", "03", "04", "05"],
+            labels: dayArray,
             datasets: [
                 {
-                  label: 'Tháng 1',
-                  data: [1000, 2000, 3000, 4000, 2300, 3363],
+                  label: `Tháng ${previousMonth}/${previousYear}`,
+                  data: data.dataMonthPrevious,
                   borderColor: "#36A1EA",        
                   boderWidth: 1.5        
                 },
                 {
-                    label: 'Tháng 2',
-                    data: [1040, 4600, 200, 44570, 8900, 1363],
+                    label: `Tháng ${monthCurrent}/${yearCurrent}`,
+                    data: data.dataMonthCurrent,
                     borderColor: "#FE6383",
                     boderWidth: 1.5
                   }
@@ -172,7 +212,12 @@ if (revenueChart){
                 maintainAspectRatio: false
         }
     }
-   )};
+   )
+        
+      }
+    })
+
+   };
 
 //  End Chart doanh thu  
 // Category Create Form
