@@ -1,5 +1,5 @@
 const AccountAdmin = require("../../models/account-admin.model")
-const Role = require('../../models/Role.model');
+const Role = require('../../models/role.model');
 module.exports.edit = async (req, res) => {
    const profileAcc = await AccountAdmin.findOne({
     _id: req.account.id
