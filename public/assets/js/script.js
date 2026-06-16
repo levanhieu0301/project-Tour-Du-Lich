@@ -741,7 +741,7 @@ const drawCart = () =>{
                     <div class="inner-item-price">
                       <span>${item.quantityAdult}</span>
                       <span>x</span>
-                      <span class="inner-highlight">${item.priceNewAdult.toLocaleString("vi-VN")}</span>
+                      <span class="inner-highlight">${item.priceNewAdult}</span>
                     </div>
                   </div>
                   <div class="inner-item">
@@ -759,7 +759,7 @@ const drawCart = () =>{
                     <div class="inner-item-price">
                       <span>${item.quantityChildren}</span>
                       <span>x</span>
-                      <span class="inner-highlight">${item.priceNewChildren.toLocaleString("vi-VN")}</span>
+                      <span class="inner-highlight">${item.priceNewChildren}</span>
                     </div>
                   </div>
                   <div class="inner-item">
@@ -777,7 +777,7 @@ const drawCart = () =>{
                     <div class="inner-item-price">
                       <span>${item.quantityBaby}</span>
                       <span>x</span>
-                      <span class="inner-highlight">${item.priceNewBaby.toLocaleString("vi-VN")}</span>
+                      <span class="inner-highlight">${item.priceNewBaby}</span>
                     </div>
                   </div>
                 </div>

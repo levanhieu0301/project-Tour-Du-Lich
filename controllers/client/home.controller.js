@@ -20,7 +20,7 @@ module.exports.home = async (req, res) => {
     }
   // End Section 2
     // Section 4: Tour Trong Nước
-  const categoryIdSection4 = "69be3a07bc3deb94c193b00a"; // Id của danh mục Tour Trong Nước
+  const categoryIdSection4 = "6a30af9344801afc503c7c1d"; // Id của danh mục Tour Trong Nước
   const listCategory = [categoryIdSection4];
 
   const listSubCategory = await Category.find({
