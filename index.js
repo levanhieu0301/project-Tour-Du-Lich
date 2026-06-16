@@ -10,7 +10,7 @@ const database = require("./config/client/database.config")
 const variableConfig = require("./config/client/variable")
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000;
 database.connectDB() // kết nối database
 // Tích hợp pug 
 app.set('views', path.join(__dirname,'views'))
